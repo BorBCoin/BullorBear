@@ -11,27 +11,20 @@ body {
     background-color: #f4f4f4;
     color: #333;
     line-height: 1.6;
-    height: 100vh;  /* Full height of the viewport */
-    display: flex;  /* Use flexbox to center content */
-    justify-content: center;  /* Center horizontally */
-    align-items: center;  /* Center vertically */
-    flex-direction: column;  /* Stack header, main content, and footer */
-}
-
-/* Header styling */
-header {
-    background-color: #4CAF50;
-    color: white;
-    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height of the viewport */
     text-align: center;
-    width: 100%;  /* Full width */
 }
 
 /* Main content */
 main {
-    text-align: center;
-    width: 100%;  /* Ensure it spans the full width */
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 /* Section styling */
@@ -39,19 +32,11 @@ main {
     margin: 20px 0;
 }
 
-/* Button styling */
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    margin-top: 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #45a049;
+/* Sentiment styling */
+#sentiment {
+    font-size: 24px;
+    font-weight: bold;
+    color: gray;  /* Default color before the sentiment loads */
 }
 
 /* Footer styling */
@@ -61,12 +46,7 @@ footer {
     padding: 10px;
     text-align: center;
     margin-top: 20px;
-    width: 100%;  /* Full width */
-}
-
-/* Sentiment styling */
-#sentiment {
-    font-size: 24px;
-    font-weight: bold;
-    color: gray;  /* Default color before the sentiment loads */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
