@@ -39,6 +39,5 @@ function updateCountdown() {
     }, 1000);  // Update every second
 }
 
-// Run the countdown and sentiment update when the page loads
-updateSentiment();  // Ensure sentiment shows when the page first loads
+// Start the countdown when the page loads
 updateCountdown();  // Start the countdown
