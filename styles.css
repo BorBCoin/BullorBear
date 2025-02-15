@@ -13,17 +13,17 @@ body {
     line-height: 1.6;
     display: flex;
     justify-content: center;
-    align-items: flex-start;  /* Align items to the top */
+    align-items: center;  /* Center items vertically */
     height: 100vh; /* Full height of the viewport */
     text-align: center;
-    padding-top: 20px;  /* Add space at the top */
+    padding-top: 10%;  /* Adjust this to move it lower from the top */
 }
 
 /* Main content */
 main {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;  /* Align to the top */
+    justify-content: center;
     align-items: center;
     height: auto;  /* Allow height to adjust based on content */
 }
