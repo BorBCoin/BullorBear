@@ -10,14 +10,18 @@ function getSentiment() {
 // Function to display sentiment on the page
 function updateSentiment() {
     const sentiment = getSentiment();
-    document.getElementById("sentiment").textContent = sentiment;  // Fix the reference to the sentiment element
+    document.getElementById("sentiment").textContent = "Loading...";  // Display loading initially
 
-    // Change the background color based on sentiment
-    if (sentiment === "Bullish") {
-        document.body.style.backgroundColor = "green";
-    } else {
-        document.body.style.backgroundColor = "red";
-    }
+    // Wait for 3 seconds before showing the sentiment
+    setTimeout(() => {
+        document.getElementById("sentiment").textContent = sentiment;  // Update sentiment text
+        // Change the background color based on sentiment
+        if (sentiment === "Bullish") {
+            document.body.style.backgroundColor = "green";
+        } else {
+            document.body.style.backgroundColor = "red";
+        }
+    }, 3000);  // 3-second delay
 }
 
 // Function to update the countdown timer
@@ -29,9 +33,9 @@ function updateCountdown() {
     const countdownInterval = setInterval(function() {
         countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
 
-        // When countdown reaches 0, update sentiment and reset countdown
+        // When countdown reaches 0, show "Loading..." and then update sentiment
         if (countdown === 0) {
-            updateSentiment();  // Update sentiment
+            updateSentiment();  // Update sentiment with delay
             countdown = 60;     // Reset countdown to 60
         }
 
@@ -39,5 +43,6 @@ function updateCountdown() {
     }, 1000);  // Update every second
 }
 
-// Start the countdown when the page loads
+// Run the countdown and sentiment update when the page loads
+updateSentiment();  // Ensure sentiment shows when the page first loads
 updateCountdown();  // Start the countdown
