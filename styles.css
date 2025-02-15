@@ -15,6 +15,7 @@ body {
     display: flex;  /* Use flexbox to center content */
     justify-content: center;  /* Center horizontally */
     align-items: center;  /* Center vertically */
+    flex-direction: column;  /* Stack header, main content, and footer */
 }
 
 /* Header styling */
@@ -23,11 +24,14 @@ header {
     color: white;
     padding: 20px;
     text-align: center;
+    width: 100%;  /* Full width */
 }
 
 /* Main content */
 main {
     text-align: center;
+    width: 100%;  /* Ensure it spans the full width */
+    padding: 20px;
 }
 
 /* Section styling */
@@ -57,6 +61,7 @@ footer {
     padding: 10px;
     text-align: center;
     margin-top: 20px;
+    width: 100%;  /* Full width */
 }
 
 /* Sentiment styling */
