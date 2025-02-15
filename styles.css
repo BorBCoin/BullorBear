@@ -43,7 +43,7 @@ nav ul li {
 
 nav ul li a {
     color: white;
-    text-decoration: none;
+    text-decoration: underline;  /* Add underline to the navigation links */
     font-size: 18px;
 }
 
