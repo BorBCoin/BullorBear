@@ -41,3 +41,25 @@ function updateCountdown() {
 
 // Run the countdown and sentiment update when the page loads
 updateCountdown();
+
+function updateCountdown() {
+    let countdown = 60;  // Start countdown from 60 seconds
+    const countdownDisplay = document.getElementById("countdown-display");
+
+    // Check if the countdownDisplay is found
+    console.log(countdownDisplay);
+
+    // Update the countdown every second
+    const countdownInterval = setInterval(function() {
+        console.log("Countdown:", countdown);  // Log countdown progress
+        countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
+
+        // When countdown reaches 0, update sentiment and reset countdown
+        if (countdown === 0) {
+            updateSentiment();  // Update sentiment
+            countdown = 60;     // Reset countdown to 60
+        }
+
+        countdown--;  // Decrease countdown by 1 second
+    }, 1000);  // Update every second
+}
