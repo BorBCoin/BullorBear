@@ -63,8 +63,3 @@ footer {
     opacity: 0;   /* Start with hidden opacity */
     transition: opacity 1s ease-in-out;  /* Fade-in effect */
 }
-
-/* Fade-in effect for sentiment text */
-#sentiment.fade-in {
-    opacity: 1;  /* Fully visible after transition */
-}
