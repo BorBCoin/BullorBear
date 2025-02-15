@@ -7,18 +7,26 @@
     
     <!-- Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
-
-    <!-- Link to your CSS file -->
-    <link rel="stylesheet" href="styles.css">
+    
+    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS if needed -->
 </head>
 <body>
+    <!-- Header with Navigation -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#how-it-works">How it Works</a></li>
+                <li><a href="#social">Social</a></li>
+                <li><a href="https://your-cta-link.com">Get Started</a></li>
+            </ul>
+        </nav>
+        <h1>Welcome to Bull or Bear Coin ($BorB)</h1>
+        <p>Your daily trading opportunity with random sentiment.</p>
+    </header>
+
     <!-- Main Content -->
     <main>
-        <header>
-            <h1>Welcome to Bull or Bear Coin ($BorB)</h1>
-            <p>Your daily trading opportunity with a random sentiment being generated.</p>
-        </header>
-
         <section class="content">
             <h2>Today's Sentiment</h2>
             <p id="sentiment">Loading...</p> <!-- This id should match the one used in JavaScript -->
@@ -29,6 +37,13 @@
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 Bull or Bear Coin. All rights reserved.</p>
+        <nav>
+            <a href="#about">About</a> | 
+            <a href="#how-it-works">How it Works</a> | 
+            <a href="#social">Social</a> | 
+            <a href="privacy.html">Privacy Policy</a> | 
+            <a href="terms.html">Terms of Service</a>
+        </nav>
     </footer>
 
     <script src="script.js"></script>
