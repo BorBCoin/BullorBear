@@ -74,8 +74,8 @@ main {
 
 /* Footer styling */
 footer {
-    background-color: #333;
-    color: white;
+    background-color: transparent;  /* Removed gray background */
+    color: black;                    /* Changed text color to black */
     padding: 10px;
     text-align: center;
     margin-top: 20px;
@@ -84,12 +84,17 @@ footer {
     width: 100%;
 }
 
+footer p {
+    font-weight: bold;  /* Made footer text bold */
+}
+
+/* Footer links styling */
 footer nav a {
-    color: white;
+    color: black;      /* Footer links text color */
     text-decoration: none;
     margin: 0 10px;
 }
 
 footer nav a:hover {
-    color: #4CAF50;
+    color: #4CAF50;     /* Change color on hover */
 }
