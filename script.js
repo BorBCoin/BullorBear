@@ -25,12 +25,8 @@ function updateCountdown() {
     let countdown = 60;  // Start countdown from 60 seconds
     const countdownDisplay = document.getElementById("countdown-display");
 
-    // Check if countdownDisplay is correctly found
-    console.log(countdownDisplay);
-
     // Update the countdown every second
     const countdownInterval = setInterval(function() {
-        console.log("Countdown:", countdown);  // Log countdown progress
         countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
 
         // When countdown reaches 0, update sentiment and reset countdown
@@ -44,4 +40,5 @@ function updateCountdown() {
 }
 
 // Run the countdown and sentiment update when the page loads
-updateCountdown();
+updateSentiment();  // Ensure sentiment shows when the page first loads
+updateCountdown();  // Start the countdown
