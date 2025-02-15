@@ -131,9 +131,9 @@ footer {
 #get-started-btn {
     background-color: gray;  /* Gray background */
     color: #8BC34A;  /* Light green color */
-    font-size: 12px; /* Increased size for better visibility */
+    font-size: 16px; /* Adjusted to a more appropriate size */
     font-weight: bold;  /* Bold text */
-    padding: 20px 30px;
+    padding: 12px 25px; /* Adjusted padding to fit the text neatly */
     border: none;
     border-radius: 5px;
     cursor: pointer;
