@@ -112,7 +112,7 @@ footer {
 /* "Get Started" button */
 #get-started-btn {
     background-color: gray;  /* Gray background */
-    color: green;  /* Green text */
+    color: #8BC34A;  /* Light green color */
     font-size: 18px;
     font-weight: bold;  /* Bold text */
     padding: 15px 25px;
