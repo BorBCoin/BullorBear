@@ -49,6 +49,11 @@ header {
     z-index: 1; /* Header stays behind confetti */
 }
 
+/* Shrink the header text */
+header h1 {
+    font-size: 28px;  /* Adjusted font size */
+}
+
 /* Navigation links */
 nav ul {
     display: flex;
