@@ -22,6 +22,18 @@ body {
     align-items: center;
     height: 100vh; /* Full height of the viewport */
     text-align: center;
+    position: relative; /* Ensure body content stays on top of canvas */
+}
+
+/* Confetti canvas styling */
+canvas {
+    position: fixed; /* Keep it fixed on the screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999999; /* Ensure confetti is in front of everything */
+    pointer-events: none; /* Allow interactions with other elements behind it */
 }
 
 /* Header and Navigation Styling */
@@ -33,7 +45,7 @@ header {
     position: absolute; /* Keep header at the top */
     top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 1; /* Header stays behind confetti */
 }
 
 /* Navigation links */
