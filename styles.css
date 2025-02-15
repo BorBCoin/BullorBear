@@ -22,6 +22,7 @@ body {
     align-items: center;
     height: 100vh; /* Full height of the viewport */
     text-align: center;
+    margin: 0; /* Ensure no margins around the body */
 }
 
 /* Header and Navigation Styling */
@@ -34,6 +35,8 @@ header {
     top: 0;
     left: 0;
     z-index: 1000;
+    height: 80px; /* Set a fixed height for the header */
+    box-sizing: border-box; /* Ensure padding is included in height */
 }
 
 /* Navigation links */
@@ -64,6 +67,7 @@ main {
     justify-content: center;
     align-items: center;
     margin-top: 80px; /* Adjust for header height */
+    width: 100%; /* Ensure main content takes up the full width */
 }
 
 /* Section styling */
