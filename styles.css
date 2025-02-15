@@ -32,7 +32,7 @@ canvas {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 9999; /* Ensure it's in front of everything */
+    z-index: 99999; /* Extremely high z-index to ensure it's in front of EVERYTHING */
     pointer-events: none; /* Allow interactions with other elements behind it */
 }
 
@@ -45,7 +45,7 @@ header {
     position: absolute; /* Keep header at the top */
     top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 1000; /* Lower than the confetti */
 }
 
 /* Navigation links */
