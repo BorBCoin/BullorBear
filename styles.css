@@ -54,4 +54,10 @@ footer {
     text-align: center;
     margin-top: 20px;
 }
+#sentiment {
+    font-size: 24px;
+    font-weight: bold;
+    color: gray;  /* Default color before the sentiment loads */
+}
+
 
