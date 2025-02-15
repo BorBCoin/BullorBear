@@ -15,7 +15,7 @@ function updateSentiment() {
     setTimeout(() => {
         const sentiment = getSentiment();
         document.getElementById("sentiment").textContent = sentiment;  // Update sentiment text
-        
+
         // Change the background color based on sentiment
         if (sentiment === "Bullish") {
             document.body.style.backgroundColor = "green";
@@ -47,3 +47,4 @@ function updateCountdown() {
 // Run the countdown and sentiment update when the page loads
 updateSentiment();  // Ensure sentiment shows when the page first loads
 updateCountdown();  // Start the countdown
+
