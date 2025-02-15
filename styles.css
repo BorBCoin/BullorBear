@@ -102,6 +102,29 @@ footer {
     width: 100%;
 }
 
+/* Footer button styling */
+#footer-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+/* "Get Started" button */
+#get-started-btn {
+    background-color: brown;
+    color: yellow;
+    font-size: 18px;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#get-started-btn:hover {
+    background-color: darkbrown;
+}
+
+/* Footer text styling */
 footer p {
     font-weight: bold;
 }
