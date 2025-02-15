@@ -13,10 +13,42 @@ body {
     line-height: 1.6;
     display: flex;
     justify-content: center;
-    align-items: center;  /* Center items vertically */
-    height: 100vh; /* Full height of the viewport */
+    align-items: center;
+    height: 100vh;
     text-align: center;
-    padding-top: -20%;  /* Adjust this to move it lower from the top */
+}
+
+/* Header and Navigation Styling */
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    width: 100%;
+    position: absolute; /* Keep header at the top */
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+/* Navigation links */
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+nav ul li a:hover {
+    color: #4CAF50;
 }
 
 /* Main content */
@@ -25,8 +57,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: auto;  /* Allow height to adjust based on content */
-    margin-top: -250px;  /* Move content upwards */
+    margin-top: 80px; /* Adjust for header height */
 }
 
 /* Section styling */
@@ -38,7 +69,7 @@ main {
 #sentiment {
     font-size: 24px;
     font-weight: bold;
-    color: gray;  /* Default color before the sentiment loads */
+    color: gray;
 }
 
 /* Footer styling */
@@ -51,4 +82,14 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+}
+
+footer nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+footer nav a:hover {
+    color: #4CAF50;
 }
