@@ -90,11 +90,12 @@ footer p {
 
 /* Footer links styling */
 footer nav a {
-    color: black;      /* Footer links text color */
-    text-decoration: none;
+    color: blue;        /* Links are now blue */
+    text-decoration: underline; /* Links will be underlined */
     margin: 0 10px;
 }
 
 footer nav a:hover {
     color: #4CAF50;     /* Change color on hover */
+    text-decoration: none;  /* Remove underline on hover */
 }
