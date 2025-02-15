@@ -32,6 +32,7 @@ main {
     margin: 20px 0;
 }
 
+/* Button styling */
 button {
     padding: 10px 20px;
     font-size: 16px;
@@ -60,6 +61,4 @@ footer {
     font-size: 24px;
     font-weight: bold;
     color: gray;  /* Default color before the sentiment loads */
-    opacity: 1;   /* Ensure it's visible initially */
-    transition: opacity 1s ease-in-out;  /* Fade-in effect for sentiment text */
 }
