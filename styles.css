@@ -29,14 +29,16 @@ body {
 header {
     background-color: #333;
     color: white;
-    padding: 10px 20px;
+    padding: 20px;  /* Adjusted for spacing around text */
     width: 100%;
     position: absolute; /* Keep header at the top */
     top: 0;
     left: 0;
     z-index: 1000;
-    height: 80px; /* Set a fixed height for the header */
     box-sizing: border-box; /* Ensure padding is included in height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Navigation links */
@@ -66,7 +68,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 80px; /* Adjust for header height */
+    margin-top: 120px; /* Adjust for header height */
     width: 100%; /* Ensure main content takes up the full width */
 }
 
