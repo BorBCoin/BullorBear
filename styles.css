@@ -11,6 +11,10 @@ body {
     background-color: #f4f4f4;
     color: #333;
     line-height: 1.6;
+    height: 100vh;  /* Full height of the viewport */
+    display: flex;  /* Use flexbox to center content */
+    justify-content: center;  /* Center horizontally */
+    align-items: center;  /* Center vertically */
 }
 
 /* Header styling */
@@ -23,7 +27,6 @@ header {
 
 /* Main content */
 main {
-    padding: 20px;
     text-align: center;
 }
 
