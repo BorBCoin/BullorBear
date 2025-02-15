@@ -111,17 +111,20 @@ footer {
 
 /* "Get Started" button */
 #get-started-btn {
-    background-color: brown;
-    color: yellow;
+    background-color: gray;  /* Gray background */
+    color: green;  /* Green text */
     font-size: 18px;
+    font-weight: bold;  /* Bold text */
     padding: 15px 25px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 30px;  /* Slightly higher on the page */
 }
 
 #get-started-btn:hover {
-    background-color: darkbrown;
+    background-color: darkgray;  /* Darker gray on hover */
 }
 
 /* Footer text styling */
