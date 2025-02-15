@@ -9,12 +9,14 @@ function getSentiment() {
 
 // Function to display sentiment on the page
 function updateSentiment() {
-    document.getElementById("sentiment").textContent = "Loading...";  // Display loading initially
+    const sentimentElement = document.getElementById("sentiment");
+    sentimentElement.textContent = "Loading...";  // Display loading initially
+    sentimentElement.style.opacity = 1;  // Make sure "Loading..." is visible
 
     // Wait for 3 seconds before showing the sentiment
     setTimeout(() => {
         const sentiment = getSentiment();
-        document.getElementById("sentiment").textContent = sentiment;  // Update sentiment text
+        sentimentElement.textContent = sentiment;  // Update sentiment text
 
         // Change the background color based on sentiment
         if (sentiment === "Bullish") {
@@ -47,4 +49,3 @@ function updateCountdown() {
 // Run the countdown and sentiment update when the page loads
 updateSentiment();  // Ensure sentiment shows when the page first loads
 updateCountdown();  // Start the countdown
-
