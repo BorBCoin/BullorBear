@@ -20,7 +20,7 @@ function updateSentiment() {
         // Change the background color based on sentiment
         if (sentiment === "Bullish") {
             document.body.style.backgroundColor = "green";  // Bullish sentiment: green
-            confetti();  // Trigger confetti for Bullish sentiment (if you want to add confetti)
+            confetti();  // Trigger confetti for Bullish sentiment
         } else {
             document.body.style.backgroundColor = "red";  // Bearish sentiment: red
         }
@@ -47,5 +47,7 @@ function updateCountdown() {
 }
 
 // Run the countdown and sentiment update when the page loads
-updateSentiment();  // Ensure sentiment shows when the page first loads
-updateCountdown();  // Start the countdown
+window.onload = function() {
+    updateSentiment();  // Ensure sentiment shows when the page first loads
+    updateCountdown();  // Start the countdown
+}
