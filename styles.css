@@ -51,7 +51,7 @@ header {
 
 /* Shrink the header text */
 header h1 {
-    font-size: 28px;  /* Adjusted font size */
+    font-size: 20px;  /* Adjusted font size */
 }
 
 /* Navigation links */
