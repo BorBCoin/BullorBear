@@ -13,18 +13,19 @@ body {
     line-height: 1.6;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;  /* Align items to the top */
     height: 100vh; /* Full height of the viewport */
     text-align: center;
+    padding-top: 20px;  /* Add space at the top */
 }
 
 /* Main content */
 main {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;  /* Align to the top */
     align-items: center;
-    height: 100%;
+    height: auto;  /* Allow height to adjust based on content */
 }
 
 /* Section styling */
