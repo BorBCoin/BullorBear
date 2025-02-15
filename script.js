@@ -16,13 +16,15 @@ function updateSentiment() {
     setTimeout(() => {
         const sentiment = getSentiment();
         sentimentElement.textContent = sentiment;  // Update sentiment text
+        console.log(`Sentiment: ${sentiment}`);  // Debugging
 
         // Change the background color based on sentiment
         if (sentiment === "Bullish") {
             document.body.style.backgroundColor = "green";  // Bullish sentiment: green
-            confetti();  // Trigger confetti for Bullish sentiment
+            console.log("Background color set to green");  // Debugging
         } else {
             document.body.style.backgroundColor = "red";  // Bearish sentiment: red
+            console.log("Background color set to red");  // Debugging
         }
     }, 3000);  // 3-second delay
 }
