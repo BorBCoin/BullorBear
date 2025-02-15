@@ -22,6 +22,7 @@ function updateSentiment() {
         if (sentiment === "Bullish") {
             document.body.style.backgroundColor = "green";  // Bullish sentiment: green
             console.log("Background color set to green");  // Debugging
+            startConfetti();  // Trigger confetti for Bullish sentiment
         } else {
             document.body.style.backgroundColor = "red";  // Bearish sentiment: red
             console.log("Background color set to red");  // Debugging
@@ -46,6 +47,15 @@ function updateCountdown() {
 
         countdown--;  // Decrease countdown by 1 second
     }, 1000);  // Update every second
+}
+
+// Confetti function (assuming it's already set up with a library like confetti.js)
+function startConfetti() {
+    confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+    });
 }
 
 // Run the countdown and sentiment update when the page loads
