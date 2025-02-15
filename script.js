@@ -1,23 +1,27 @@
-// Function to generate random sentiment (bullish or bearish)
-function generateSentiment() {
-    const sentiments = ["Bullish", "Bearish"];
-    const randomSentiment = sentiments[Math.floor(Math.random() * sentiments.length)];
-    
-    // Display the sentiment on the page
-    const sentimentElement = document.getElementById("sentiment");
-    sentimentElement.innerText = randomSentiment;
+// Array of sentiments
+const sentiments = ["Bullish", "Bearish"];
 
-    // Change the color based on sentiment
-    if (randomSentiment === "Bullish") {
-        sentimentElement.style.color = "green";  // Green for Bullish
+// Function to randomly choose a sentiment
+function getSentiment() {
+    const randomIndex = Math.floor(Math.random() * sentiments.length);
+    return sentiments[randomIndex];
+}
+
+// Function to display sentiment on the page
+function updateSentiment() {
+    const sentiment = getSentiment();
+    document.getElementById("sentiment-display").textContent = sentiment;
+
+    // Change the background color based on sentiment
+    if (sentiment === "Bullish") {
+        document.body.style.backgroundColor = "green";
     } else {
-        sentimentElement.style.color = "red";    // Red for Bearish
+        document.body.style.backgroundColor = "red";
     }
 }
 
-// Set interval to change sentiment every minute (60000 milliseconds)
-setInterval(generateSentiment, 60000);
+// Run the update every 1 minute (60000 milliseconds)
+setInterval(updateSentiment, 60000);
 
-// Generate initial sentiment when the page loads
-generateSentiment();
-
+// Initial sentiment update when page loads
+updateSentiment();
