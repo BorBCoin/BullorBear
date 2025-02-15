@@ -5,6 +5,12 @@
     box-sizing: border-box;
 }
 
+/* Prevent scrolling */
+html, body {
+    overflow: hidden; /* Disable scrolling */
+    height: 100%; /* Ensure full height is utilized */
+}
+
 /* Body styling */
 body {
     font-family: Arial, sans-serif;
@@ -14,7 +20,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100vh; /* Full height of the viewport */
     text-align: center;
 }
 
@@ -43,7 +49,7 @@ nav ul li {
 
 nav ul li a {
     color: white;
-    text-decoration: underline;  /* Add underline to the navigation links */
+    text-decoration: underline;
     font-size: 18px;
 }
 
@@ -74,8 +80,8 @@ main {
 
 /* Footer styling */
 footer {
-    background-color: transparent;  /* Removed gray background */
-    color: black;                    /* Changed text color to black */
+    background-color: transparent;
+    color: black;
     padding: 10px;
     text-align: center;
     margin-top: 20px;
@@ -85,17 +91,17 @@ footer {
 }
 
 footer p {
-    font-weight: bold;  /* Made footer text bold */
+    font-weight: bold;
 }
 
 /* Footer links styling */
 footer nav a {
-    color: blue;        /* Links are now blue */
-    text-decoration: underline; /* Links will be underlined */
+    color: blue;
+    text-decoration: underline;
     margin: 0 10px;
 }
 
 footer nav a:hover {
-    color: #4CAF50;     /* Change color on hover */
-    text-decoration: none;  /* Remove underline on hover */
+    color: #4CAF50;
+    text-decoration: none;
 }
