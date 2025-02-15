@@ -54,10 +54,17 @@ footer {
     text-align: center;
     margin-top: 20px;
 }
+
+/* Sentiment styling */
 #sentiment {
     font-size: 24px;
     font-weight: bold;
     color: gray;  /* Default color before the sentiment loads */
+    opacity: 0;   /* Start with hidden opacity */
+    transition: opacity 1s ease-in-out;  /* Fade-in effect */
 }
 
-
+/* Fade-in effect for sentiment text */
+#sentiment.fade-in {
+    opacity: 1;  /* Fully visible after transition */
+}
