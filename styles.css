@@ -26,7 +26,7 @@ main {
     justify-content: center;
     align-items: center;
     height: auto;  /* Allow height to adjust based on content */
-    margin-top: -100px;  /* Move content upwards */
+    margin-top: -250px;  /* Move content upwards */
 }
 
 /* Section styling */
