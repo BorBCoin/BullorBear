@@ -22,23 +22,18 @@ body {
     align-items: center;
     height: 100vh; /* Full height of the viewport */
     text-align: center;
-    margin: 0; /* Ensure no margins around the body */
 }
 
 /* Header and Navigation Styling */
 header {
     background-color: #333;
     color: white;
-    padding: 20px;  /* Adjusted for spacing around text */
+    padding: 10px 20px;
     width: 100%;
     position: absolute; /* Keep header at the top */
     top: 0;
     left: 0;
     z-index: 1000;
-    box-sizing: border-box; /* Ensure padding is included in height */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 /* Navigation links */
@@ -68,8 +63,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 120px; /* Adjust for header height */
-    width: 100%; /* Ensure main content takes up the full width */
+    margin-top: 80px; /* Adjust for header height */
 }
 
 /* Section styling */
