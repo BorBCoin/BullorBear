@@ -16,7 +16,7 @@ body {
     align-items: center;  /* Center items vertically */
     height: 100vh; /* Full height of the viewport */
     text-align: center;
-    padding-top: 30%;  /* Adjust this to move it lower from the top */
+    padding-top: 0%;  /* Adjust this to move it lower from the top */
 }
 
 /* Main content */
