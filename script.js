@@ -10,7 +10,7 @@ function getSentiment() {
 // Function to display sentiment on the page
 function updateSentiment() {
     const sentiment = getSentiment();
-    document.getElementById("sentiment-display").textContent = sentiment;
+    document.getElementById("sentiment").textContent = sentiment;  // Fix the reference to the sentiment element
 
     // Change the background color based on sentiment
     if (sentiment === "Bullish") {
@@ -25,28 +25,7 @@ function updateCountdown() {
     let countdown = 60;  // Start countdown from 60 seconds
     const countdownDisplay = document.getElementById("countdown-display");
 
-    // Update the countdown every second
-    const countdownInterval = setInterval(function() {
-        countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
-
-        // When countdown reaches 0, update sentiment and reset countdown
-        if (countdown === 0) {
-            updateSentiment();  // Update sentiment
-            countdown = 60;     // Reset countdown to 60
-        }
-
-        countdown--;  // Decrease countdown by 1 second
-    }, 1000);  // Update every second
-}
-
-// Run the countdown and sentiment update when the page loads
-updateCountdown();
-
-function updateCountdown() {
-    let countdown = 60;  // Start countdown from 60 seconds
-    const countdownDisplay = document.getElementById("countdown-display");
-
-    // Check if the countdownDisplay is found
+    // Check if countdownDisplay is correctly found
     console.log(countdownDisplay);
 
     // Update the countdown every second
@@ -63,3 +42,6 @@ function updateCountdown() {
         countdown--;  // Decrease countdown by 1 second
     }, 1000);  // Update every second
 }
+
+// Run the countdown and sentiment update when the page loads
+updateCountdown();
