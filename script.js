@@ -20,8 +20,24 @@ function updateSentiment() {
     }
 }
 
-// Run the update every 1 minute (60000 milliseconds)
-setInterval(updateSentiment, 60000);
+// Function to update the countdown timer
+function updateCountdown() {
+    let countdown = 60;  // Start countdown from 60 seconds
+    const countdownDisplay = document.getElementById("countdown-display");
 
-// Initial sentiment update when page loads
-updateSentiment();
+    // Update the countdown every second
+    const countdownInterval = setInterval(function() {
+        countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
+
+        // When countdown reaches 0, update sentiment and reset countdown
+        if (countdown === 0) {
+            updateSentiment();  // Update sentiment
+            countdown = 60;     // Reset countdown to 60
+        }
+
+        countdown--;  // Decrease countdown by 1 second
+    }, 1000);  // Update every second
+}
+
+// Run the countdown and sentiment update when the page loads
+updateCountdown();
