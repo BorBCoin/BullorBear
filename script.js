@@ -83,3 +83,16 @@ window.onload = function () {
     let countdown = parseInt(localStorage.getItem("countdown"), 10); // Get saved countdown value
 
     if (!sentiment || !lastUpdatedTime || hasOneMinutePassed(lastUpdatedTime)) {
+        // If no sentiment or more than 60 seconds have passed, update the sentiment
+        updateSentiment();
+        countdown = 60; // Reset countdown to 60
+        localStorage.setItem("countdown", countdown); // Store countdown value
+    } else {
+        // Use stored sentiment and countdown if within 60 seconds
+        document.getElementById("sentiment").textContent = sentiment;
+        document.body.style.backgroundColor = sentiment === "Bullish" ? "green" : "red";
+    }
+
+    // Start or resume the countdown timer
+    updateCountdown(); // Start the countdown timer when the page loads
+};
