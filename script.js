@@ -1,65 +1,75 @@
-// Function to generate the random sentiment
-function generateSentiment() {
-    const sentiments = ["Bullish", "Bearish"];
-    const randomSentiment = sentiments[Math.floor(Math.random() * sentiments.length)];
-    localStorage.setItem("sentiment", randomSentiment);  // Store sentiment
-    return randomSentiment;
+// Array of sentiments
+const sentiments = ["Bullish", "Bearish"];
+
+// Function to randomly choose a sentiment using Crypto API
+function getSentiment() {
+    const randomIndex = new Uint32Array(1);
+    window.crypto.getRandomValues(randomIndex);
+    const index = randomIndex[0] % sentiments.length;
+    console.log(`Random Value: ${randomIndex[0]}`); // Debugging
+    return { sentiment: sentiments[index], randomValue: randomIndex[0] }; // Return both sentiment and random value
 }
 
-// Function to update sentiment text and page styling
+// Function to display sentiment on the home page
 function updateSentiment() {
-    const sentiment = localStorage.getItem("sentiment") || generateSentiment(); // Fetch or generate sentiment
-    document.getElementById("sentiment").textContent = sentiment; // Display sentiment
+    const sentimentElement = document.getElementById("sentiment");
 
-    // Change background color based on sentiment
+    // Get sentiment and random value
+    const { sentiment, randomValue } = getSentiment(); // Get sentiment and random value
+
+    sentimentElement.textContent = sentiment; // Update sentiment text
+    sentimentElement.style.color = "#FFD700"; // Bright yellow for both Bullish and Bearish
+
+    // Store the sentiment and random value in localStorage
+    localStorage.setItem("sentiment", sentiment);
+    localStorage.setItem("randomValue", randomValue);
+
+    console.log(`Sentiment: ${sentiment}`); // Debugging
+
+    // Change the background color based on sentiment
     if (sentiment === "Bullish") {
         document.body.style.backgroundColor = "green"; // Bullish sentiment: green
+        console.log("Background color set to green"); // Debugging
+        startConfetti(); // Trigger confetti for Bullish sentiment
     } else {
         document.body.style.backgroundColor = "red"; // Bearish sentiment: red
+        console.log("Background color set to red"); // Debugging
     }
-
-    // Save random value to localStorage for proof of chance page
-    const randomValue = Math.random(); // Generate a random value
-    localStorage.setItem("randomValue", randomValue);
 }
 
-// Countdown timer logic
-let countdownTime = 60; // Countdown time in seconds
-
+// Function to update the countdown timer
 function updateCountdown() {
+    let countdown = 60; // Start countdown from 60 seconds
     const countdownDisplay = document.getElementById("countdown-display");
-    countdownDisplay.textContent = `Time remaining: ${countdownTime} seconds`;
 
-    if (countdownTime <= 0) {
-        // Reset countdown
-        countdownTime = 60;
-        generateSentiment();  // Update sentiment when countdown hits zero
-        updateSentiment();     // Update sentiment display
-    }
+    // Update the countdown every second
+    const countdownInterval = setInterval(function () {
+        countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
 
-    countdownTime--;
+        // When countdown reaches 0, reset the countdown
+        if (countdown === 0) {
+            updateSentiment(); // Update sentiment when timer reaches 0
+            countdown = 60; // Reset countdown to 60
+            setTimeout(() => {
+                updateCountdown(); // Restart countdown after sentiment update
+            }, 3000); // Wait for 3 seconds to allow sentiment update
+        }
+
+        countdown--; // Decrease countdown by 1 second
+    }, 1000); // Update every second
 }
 
-// Persistent timer (floating box on the left side)
-function updatePersistentTimer() {
-    const persistentTimer = document.getElementById("persistent-timer");
-    let persistentCountdownTime = countdownTime;
-
-    persistentTimer.textContent = `Time remaining: ${persistentCountdownTime} seconds`;
-    
-    if (persistentCountdownTime <= 0) {
-        persistentCountdownTime = 60;
-        generateSentiment();
-        updateSentiment();
-    }
-    
-    persistentCountdownTime--;
+// Confetti function (assuming it's already set up with a library like confetti.js)
+function startConfetti() {
+    confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+    });
 }
 
-// Initialize sentiment and countdown
-document.addEventListener("DOMContentLoaded", function() {
-    updateSentiment(); // Initialize the sentiment display on page load
-    setInterval(updateCountdown, 1000); // Update countdown every second
-    setInterval(updatePersistentTimer, 1000); // Update persistent timer every second
-});
-
+// Run the countdown and sentiment update when the page loads
+window.onload = function () {
+    updateSentiment(); // Ensure sentiment shows when the page first loads
+    setTimeout(updateCountdown, 500); // Set a small delay before starting the countdown
+}; 
