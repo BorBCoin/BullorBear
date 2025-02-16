@@ -6,7 +6,7 @@ function getSentiment() {
     const randomIndex = new Uint32Array(1);
     window.crypto.getRandomValues(randomIndex);
     const index = randomIndex[0] % sentiments.length;
-    return sentiments[index]; 
+    return sentiments[index];
 }
 
 // Function to check if 60 seconds have passed since last sentiment change
@@ -21,9 +21,9 @@ function updateSentiment() {
     const sentiment = getSentiment();
 
     sentimentElement.textContent = sentiment;
-    sentimentElement.style.color = "#FFD700"; // Bright yellow for both Bullish and Bearish
+    sentimentElement.style.color = "#FFD700";
 
-    // Store the sentiment and exact timestamp of the update
+    // Store sentiment and timestamp
     localStorage.setItem("sentiment", sentiment);
     localStorage.setItem("lastUpdatedTime", Date.now());
 
@@ -40,7 +40,7 @@ function updateSentiment() {
 let countdownInterval;
 function updateCountdown() {
     const lastUpdatedTime = parseInt(localStorage.getItem("lastUpdatedTime"), 10);
-    if (isNaN(lastUpdatedTime)) return; // Prevent errors if no timestamp exists
+    if (isNaN(lastUpdatedTime)) return;
 
     function calculateRemainingTime() {
         const elapsedTime = Math.floor((Date.now() - lastUpdatedTime) / 1000);
@@ -54,15 +54,15 @@ function updateCountdown() {
         countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
 
         if (countdown === 0) {
-            updateSentiment(); // Reset sentiment when countdown hits 0
-            updateCountdown(); // Restart countdown
+            updateSentiment(); 
+            updateCountdown(); 
         }
     }
 
-    updateDisplay(); // Update immediately on load
+    updateDisplay();
 
     if (countdownInterval) clearInterval(countdownInterval);
-    countdownInterval = setInterval(updateDisplay, 1000); // Update every second
+    countdownInterval = setInterval(updateDisplay, 1000);
 }
 
 // Confetti function (assuming it's already set up with a library like confetti.js)
@@ -74,17 +74,27 @@ function startConfetti() {
     });
 }
 
+// Sync sentiment and timer across all pages
+window.addEventListener("storage", function(event) {
+    if (event.key === "sentiment" || event.key === "lastUpdatedTime") {
+        const sentiment = localStorage.getItem("sentiment");
+        document.getElementById("sentiment").textContent = sentiment;
+        document.body.style.backgroundColor = sentiment === "Bullish" ? "green" : "red";
+        updateCountdown();
+    }
+});
+
 // Initialize on page load
 window.onload = function () {
     const sentiment = localStorage.getItem("sentiment");
     const lastUpdatedTime = parseInt(localStorage.getItem("lastUpdatedTime"), 10);
 
     if (!sentiment || isNaN(lastUpdatedTime) || hasOneMinutePassed(lastUpdatedTime)) {
-        updateSentiment(); // Generate new sentiment if none exists or time has passed
+        updateSentiment();
     } else {
         document.getElementById("sentiment").textContent = sentiment;
         document.body.style.backgroundColor = sentiment === "Bullish" ? "green" : "red";
     }
 
-    updateCountdown(); // Start countdown
+    updateCountdown();
 };
