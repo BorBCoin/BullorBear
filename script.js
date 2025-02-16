@@ -1,23 +1,33 @@
 // Array of sentiments
 const sentiments = ["Bullish", "Bearish"];
 
-// Function to randomly choose a sentiment
+// Function to randomly choose a sentiment using Crypto API
 function getSentiment() {
-    const randomIndex = Math.floor(Math.random() * sentiments.length);
-    return sentiments[randomIndex];
+    const randomIndex = new Uint32Array(1);
+    window.crypto.getRandomValues(randomIndex);
+    const index = randomIndex[0] % sentiments.length;
+    console.log(`Random Value: ${randomIndex[0]}`); // Debugging
+    return sentiments[index];
 }
 
 // Function to display sentiment on the page
 function updateSentiment() {
     const sentimentElement = document.getElementById("sentiment");
+    const randomValueElement = document.getElementById("random-value");
     sentimentElement.textContent = "Loading..."; // Display loading initially
     sentimentElement.style.color = "#000000"; // Black color for loading
 
     // Wait for 3 seconds before showing the sentiment
     setTimeout(() => {
-        const sentiment = getSentiment();
+        const randomIndex = new Uint32Array(1);
+        window.crypto.getRandomValues(randomIndex);
+        const index = randomIndex[0] % sentiments.length;
+        const sentiment = sentiments[index];
+
         sentimentElement.textContent = sentiment; // Update sentiment text
         sentimentElement.style.color = "#FFD700"; // Bright yellow for both Bullish and Bearish
+        randomValueElement.textContent = `Random Value: ${randomIndex[0]}`; // Display the random value used
+
         console.log(`Sentiment: ${sentiment}`); // Debugging
 
         // Change the background color based on sentiment
