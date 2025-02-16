@@ -1,15 +1,15 @@
 // Array of sentiments
 const sentiments = ["Bullish", "Bearish"];
 
-// Function to randomly choose a sentiment using the Crypto API
+// Function to randomly choose a sentiment using Crypto API
 function getSentiment() {
     const randomIndex = new Uint32Array(1);
     window.crypto.getRandomValues(randomIndex);
     const index = randomIndex[0] % sentiments.length;
-    return sentiments[index]; 
+    return { sentiment: sentiments[index], randomValue: randomIndex[0] }; // Return both sentiment and random value
 }
 
-// Function to check if 60 seconds have passed since the last sentiment change
+// Function to check if 60 seconds have passed since last sentiment change
 function hasOneMinutePassed(lastUpdatedTime) {
     const currentTime = Date.now();
     return currentTime - lastUpdatedTime >= 60000;
@@ -18,19 +18,22 @@ function hasOneMinutePassed(lastUpdatedTime) {
 // Function to update sentiment and store the timestamp
 function updateSentiment() {
     const sentimentElement = document.getElementById("sentiment");
-    const sentiment = getSentiment();
+    const { sentiment, randomValue } = getSentiment(); // Get sentiment and random value
 
     sentimentElement.textContent = sentiment;
     sentimentElement.style.color = "#FFD700"; // Bright yellow for both Bullish and Bearish
 
-    // Store the sentiment and exact timestamp of the update
+    // Store the sentiment, random value, and the exact timestamp of the update
     localStorage.setItem("sentiment", sentiment);
+    localStorage.setItem("randomValue", randomValue);
     localStorage.setItem("lastUpdatedTime", Date.now());
 
     console.log(`Sentiment: ${sentiment} | Updated at: ${new Date().toLocaleTimeString()}`);
 
+    // Change background color based on sentiment
     document.body.style.backgroundColor = sentiment === "Bullish" ? "green" : "red";
 
+    // Trigger confetti for Bullish sentiment
     if (sentiment === "Bullish") {
         startConfetti();
     }
@@ -82,11 +85,11 @@ window.onload = function () {
     if (!sentiment || isNaN(lastUpdatedTime) || hasOneMinutePassed(lastUpdatedTime)) {
         updateSentiment(); // Generate new sentiment if none exists or time has passed
     } else {
+        // Use stored sentiment and update the page with it
         document.getElementById("sentiment").textContent = sentiment;
         document.body.style.backgroundColor = sentiment === "Bullish" ? "green" : "red";
     }
 
     updateCountdown(); // Start countdown
-
-    // Optional: Add any other page-specific logic here
 };
+
