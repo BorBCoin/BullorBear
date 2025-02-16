@@ -28,7 +28,7 @@ function updateSentiment() {
     // Store the sentiment, random value, and the timestamp of the update
     localStorage.setItem("sentiment", sentiment);
     localStorage.setItem("randomValue", randomValue);
-    localStorage.setItem("lastUpdatedTime", Date.now());
+    localStorage.setItem("lastUpdatedTime", Date.now()); // Store exact time of the sentiment update
 
     console.log(`Sentiment: ${sentiment}`); // Debugging
 
@@ -51,7 +51,7 @@ function updateCountdown() {
 
     const countdownDisplay = document.getElementById("countdown-display");
 
-    // Calculate the time elapsed since the last page load
+    // Calculate the time elapsed since the last page load (or reload)
     const elapsedTime = Math.floor((Date.now() - lastUpdatedTime) / 1000); // Time elapsed in seconds
     countdown -= elapsedTime; // Subtract the elapsed time from the countdown
 
