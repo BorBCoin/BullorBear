@@ -111,4 +111,4 @@ window.onload = function () {
 
     // Start or resume the countdown timer
     updateCountdown(); // Start the countdown timer when the page loads
-};
+}; 
