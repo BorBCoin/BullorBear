@@ -1,4 +1,4 @@
-// Array of sentiments
+ // Array of sentiments
 const sentiments = ["Bullish", "Bearish"];
 
 // Function to randomly choose a sentiment using Crypto API
@@ -30,7 +30,7 @@ function updateSentiment() {
     localStorage.setItem("randomValue", randomValue);
     localStorage.setItem("lastUpdatedTime", Date.now());
 
-    console.log(`Sentiment: ${sentiment}`); // Debugging
+    console.log(Sentiment: ${sentiment}); // Debugging
 
     // Change the background color based on sentiment
     if (sentiment === "Bullish") {
@@ -50,7 +50,7 @@ function updateCountdown() {
 
     // Update the countdown every second
     const countdownInterval = setInterval(function () {
-        countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
+        countdownDisplay.textContent = Time remaining: ${countdown} seconds;
 
         // When countdown reaches 0, reset the countdown
         if (countdown === 0) {
