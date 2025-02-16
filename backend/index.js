@@ -1,29 +1,36 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-// Store the sentiment and time
-let sentiment = 'Bullish';  // Default sentiment
-let nextChangeTime = new Date().setHours(24, 0, 0, 0);  // Next sentiment change is 24 hours later
+// Array of sentiments
+const sentiments = ["Bullish", "Bearish"];
 
-// Endpoint to get the sentiment and time
+// Store sentiment and timestamp globally
+let sentimentData = {
+    sentiment: "Bullish", // Default initial sentiment
+    lastUpdatedTime: Date.now(), // Timestamp of the last update
+};
+
+// API to get sentiment and countdown time
 app.get('/api/sentiment', (req, res) => {
-  // Check if it's time to change sentiment
-  const currentTime = new Date().getTime();
-  if (currentTime >= nextChangeTime) {
-    // Change sentiment and reset timer
-    sentiment = Math.random() > 0.5 ? 'Bullish' : 'Bearish';  // Random sentiment
-    nextChangeTime = new Date().setHours(new Date().getHours() + 24, 0, 0, 0);  // Set next change time
-  }
-  const timeLeft = nextChangeTime - currentTime;  // Time left for next change
-  
-  res.json({
-    sentiment,
-    timeLeft
-  });
+    const currentTime = Date.now();
+    const elapsedTime = Math.floor((currentTime - sentimentData.lastUpdatedTime) / 1000);
+    const timeLeft = Math.max(60 - elapsedTime, 0);
+
+    // If 60 seconds have passed, generate a new sentiment
+    if (timeLeft === 0) {
+        const randomIndex = Math.floor(Math.random() * sentiments.length);
+        sentimentData.sentiment = sentiments[randomIndex];
+        sentimentData.lastUpdatedTime = currentTime; // Update timestamp
+    }
+
+    res.json({
+        sentiment: sentimentData.sentiment,
+        timeLeft: timeLeft,
+    });
 });
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+    console.log(`Server running on http://localhost:${port}`);
 });
