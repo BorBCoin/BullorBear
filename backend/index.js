@@ -1,6 +1,12 @@
 const express = require('express');
+const cors = require('cors'); // Import CORS
 const app = express();
 const port = process.env.PORT || 3000;
+
+// Enable CORS for Netlify domain
+app.use(cors({
+    origin: 'https://borbcoin.netlify.app'
+}));
 
 // Array of sentiments
 const sentiments = ["Bullish", "Bearish"];
