@@ -82,6 +82,7 @@ window.onload = function () {
     const sentiment = localStorage.getItem("sentiment");
     const lastUpdatedTime = parseInt(localStorage.getItem("lastUpdatedTime"), 10);
 
+    // Update sentiment immediately if no sentiment or if 1 minute has passed
     if (!sentiment || isNaN(lastUpdatedTime) || hasOneMinutePassed(lastUpdatedTime)) {
         updateSentiment(); // Generate new sentiment if none exists or time has passed
     } else {
@@ -90,8 +91,5 @@ window.onload = function () {
         document.body.style.backgroundColor = sentiment === "Bullish" ? "green" : "red";
     }
 
-    updateCountdown(); // Start countdown
+    updateCountdown(); // Start countdown timer when page loads
 };
-
-};
-
