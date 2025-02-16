@@ -1,13 +1,25 @@
+// Array of sentiments
+const sentiments = ["Bullish", "Bearish"];
+
+// Function to randomly choose a sentiment using Crypto API
+function getSentiment() {
+    const randomIndex = new Uint32Array(1);
+    window.crypto.getRandomValues(randomIndex);
+    const index = randomIndex[0] % sentiments.length;
+    console.log(`Random Value: ${randomIndex[0]}`); // Debugging
+    return { sentiment: sentiments[index], randomValue: randomIndex[0] }; // Return both sentiment and random value
+}
+
 // Function to display sentiment on the page
 function updateSentiment() {
     const sentimentElement = document.getElementById("sentiment");
     const randomValueElement = document.getElementById("random-value");
 
-    // Initially, show nothing or a blank space (no "Loading..." text here)
-    sentimentElement.textContent = ""; // Clear previous sentiment or set to an empty string
-    sentimentElement.style.color = "#000000"; // Default color for sentiment element
+    // First, show "Loading..." and change the sentiment text color
+    sentimentElement.textContent = "Loading...";
+    sentimentElement.style.color = "#000000"; // Default color for loading
 
-    // Wait for 3 seconds before showing the sentiment after the countdown ends
+    // Wait for 3 seconds before showing the sentiment
     setTimeout(() => {
         const { sentiment, randomValue } = getSentiment(); // Get sentiment and random value
 
@@ -35,7 +47,7 @@ function updateSentiment() {
 
         // Force a refresh to ensure color change is reflected immediately
         document.body.offsetHeight; // Trigger a reflow/repaint
-    }, 3000); // 3-second delay to simulate loading after the countdown
+    }, 3000); // 3-second delay
 }
 
 // Function to update the countdown timer
@@ -49,9 +61,7 @@ function updateCountdown() {
 
         // When countdown reaches 0, show "Loading..." and then update sentiment
         if (countdown === 0) {
-            // Show "Loading..." for the sentiment
-            document.getElementById("sentiment").textContent = "Loading...";
-            updateSentiment(); // Update sentiment with delay
+            updateSentiment(); // Update sentiment after the timer ends
             countdown = 60; // Reset countdown to 60
         }
 
