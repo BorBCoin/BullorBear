@@ -7,7 +7,7 @@ function getSentiment() {
     window.crypto.getRandomValues(randomIndex);
     const index = randomIndex[0] % sentiments.length;
     console.log(`Random Value: ${randomIndex[0]}`); // Debugging
-    return sentiments[index];
+    return { sentiment: sentiments[index], randomValue: randomIndex[0] }; // Return both sentiment and random value
 }
 
 // Function to display sentiment on the page
@@ -19,14 +19,11 @@ function updateSentiment() {
 
     // Wait for 3 seconds before showing the sentiment
     setTimeout(() => {
-        const randomIndex = new Uint32Array(1);
-        window.crypto.getRandomValues(randomIndex);
-        const index = randomIndex[0] % sentiments.length;
-        const sentiment = sentiments[index];
+        const { sentiment, randomValue } = getSentiment(); // Get sentiment and random value
 
         sentimentElement.textContent = sentiment; // Update sentiment text
         sentimentElement.style.color = "#FFD700"; // Bright yellow for both Bullish and Bearish
-        randomValueElement.textContent = `Random Value: ${randomIndex[0]}`; // Display the random value used
+        randomValueElement.textContent = `Random Value: ${randomValue}`; // Display the random value used
 
         console.log(`Sentiment: ${sentiment}`); // Debugging
 
