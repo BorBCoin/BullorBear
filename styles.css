@@ -107,18 +107,19 @@ main {
     color: #FFD700; /* Bright yellow for Bullish and Bearish */
 }
 
-/* Persistent Timer */
-#persistent-timer {
+/* Countdown Timer styling - floating box */
+#countdown-box {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    left: 20px; /* Add a small space from the edge */
+    top: 50%; /* Vertically center */
+    transform: translateY(-50%); /* Proper centering */
     background-color: rgba(0, 0, 0, 0.7); /* Dark background with opacity */
     color: white;
-    text-align: center;
-    padding: 10px 0;
-    font-size: 20px;
+    padding: 15px 30px; /* Padding around the timer */
+    font-size: 22px;
+    border-radius: 10px; /* Rounded corners */
     z-index: 1000; /* Ensure it's in front of all other content */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Slight shadow for visual depth */
 }
 
 /* Footer styling */
