@@ -13,7 +13,6 @@ function getSentiment() {
 // Function to display sentiment on the home page
 function updateSentiment() {
     const sentimentElement = document.getElementById("sentiment");
-    const randomValueElement = document.getElementById("random-value");
 
     // Get sentiment and random value
     const { sentiment, randomValue } = getSentiment(); // Get sentiment and random value
@@ -25,29 +24,17 @@ function updateSentiment() {
     localStorage.setItem("sentiment", sentiment);
     localStorage.setItem("randomValue", randomValue);
 
-    // Reveal the random value and show it
-    randomValueElement.textContent = `Random Value: ${randomValue}`; 
-    randomValueElement.style.display = "block"; // Show the value
     console.log(`Sentiment: ${sentiment}`); // Debugging
 
     // Change the background color based on sentiment
     if (sentiment === "Bullish") {
-        setTimeout(function () {
-            document.body.style.backgroundColor = "green"; // Bullish sentiment: green
-            console.log("Background color set to green"); // Debugging
-            startConfetti(); // Trigger confetti for Bullish sentiment
-        }, 500); // Small delay to ensure everything loads first
+        document.body.style.backgroundColor = "green"; // Bullish sentiment: green
+        console.log("Background color set to green"); // Debugging
+        startConfetti(); // Trigger confetti for Bullish sentiment
     } else {
-        setTimeout(function () {
-            document.body.style.backgroundColor = "red"; // Bearish sentiment: red
-            console.log("Background color set to red"); // Debugging
-        }, 500); // Small delay
+        document.body.style.backgroundColor = "red"; // Bearish sentiment: red
+        console.log("Background color set to red"); // Debugging
     }
-
-    // Force a refresh to ensure color change is reflected immediately
-    document.body.style.transition = "none"; // Disable transition for immediate change
-    document.body.offsetHeight; // Trigger a reflow/repaint
-    document.body.style.transition = "background-color 0.5s ease"; // Enable transition again
 }
 
 // Function to update the countdown timer
@@ -59,10 +46,10 @@ function updateCountdown() {
     const countdownInterval = setInterval(function () {
         countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
 
-        // When countdown reaches 0, show "Loading..." and then update sentiment
+        // When countdown reaches 0, reset the countdown
         if (countdown === 0) {
-            clearInterval(countdownInterval); // Clear the interval to stop countdown
-            updateSentiment(); // Update sentiment with delay
+            updateSentiment(); // Update sentiment when timer reaches 0
+            countdown = 60; // Reset countdown to 60
             setTimeout(() => {
                 updateCountdown(); // Restart countdown after sentiment update
             }, 3000); // Wait for 3 seconds to allow sentiment update
@@ -83,8 +70,6 @@ function startConfetti() {
 
 // Run the countdown and sentiment update when the page loads
 window.onload = function () {
-    setTimeout(function () {
-        updateSentiment(); // Ensure sentiment shows when the page first loads
-        updateCountdown(); // Start the countdown with a slight delay
-    }, 500); // Small delay to ensure everything is loaded
+    updateSentiment(); // Ensure sentiment shows when the page first loads
+    setTimeout(updateCountdown, 500); // Set a small delay before starting the countdown
 };
