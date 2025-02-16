@@ -44,7 +44,9 @@ function updateSentiment() {
         }
 
         // Force a refresh to ensure color change is reflected immediately
-        document.body.style.transition = "background-color 0.5s ease";
+        document.body.style.transition = "none"; // Disable transition for immediate change
+        document.body.offsetHeight; // Trigger a reflow/repaint
+        document.body.style.transition = "background-color 0.5s ease"; // Enable transition again
     }, 3000); // 3-second delay
 }
 
