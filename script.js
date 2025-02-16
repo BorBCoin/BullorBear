@@ -59,7 +59,6 @@ function updateCountdown() {
         if (countdown === 0) {
             clearInterval(countdownInterval); // Clear the interval to stop countdown
             updateSentiment(); // Update sentiment with delay
-            countdown = 60; // Reset countdown to 60
             setTimeout(() => {
                 updateCountdown(); // Restart countdown after sentiment update
             }, 3000); // Wait for 3 seconds to allow sentiment update
