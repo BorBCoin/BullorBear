@@ -83,4 +83,3 @@ window.onload = function () {
     let countdown = parseInt(localStorage.getItem("countdown"), 10); // Get saved countdown value
 
     if (!sentiment || !lastUpdatedTime || hasOneMinutePassed(lastUpdatedTime)) {
-        //
