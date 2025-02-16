@@ -26,7 +26,8 @@ app.get('/api/sentiment', (req, res) => {
 
     res.json({
         sentiment: sentimentData.sentiment,
-        timeLeft: timeLeft,
+        lastUpdatedTime: sentimentData.lastUpdatedTime, // Send the correct timestamp
+        timeLeft: timeLeft, // Send time left
     });
 });
 
