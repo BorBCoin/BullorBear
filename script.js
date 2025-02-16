@@ -48,7 +48,7 @@ function updateSentiment() {
 
 // Function to update the countdown timer
 function updateCountdown() {
-    let countdown = 60; // Start countdown from 60 seconds
+    let countdown = parseInt(localStorage.getItem("countdown"), 10) || 60; // Start countdown from stored value or 60 seconds if not found
     const countdownDisplay = document.getElementById("countdown-display");
 
     // Update the countdown every second
@@ -59,12 +59,14 @@ function updateCountdown() {
         if (countdown === 0) {
             updateSentiment(); // Update sentiment when timer reaches 0
             countdown = 60; // Reset countdown to 60
+            localStorage.setItem("countdown", countdown); // Store the reset value in localStorage
             setTimeout(() => {
                 updateCountdown(); // Restart countdown after sentiment update
             }, 3000); // Wait for 3 seconds to allow sentiment update
         }
 
         countdown--; // Decrease countdown by 1 second
+        localStorage.setItem("countdown", countdown); // Store updated countdown value in localStorage
     }, 1000); // Update every second
 }
 
@@ -91,6 +93,12 @@ window.onload = function () {
     } else {
         // If no sentiment stored, set initial sentiment
         updateSentiment();
+    }
+
+    // Start or resume the countdown timer based on stored value
+    updateCountdown(); // Start the countdown timer when the page loads
+};
+
     }
 
     updateCountdown(); // Start the countdown timer when the page loads
