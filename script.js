@@ -23,8 +23,14 @@ function updateSentiment() {
 
         sentimentElement.textContent = sentiment; // Update sentiment text
         sentimentElement.style.color = "#FFD700"; // Bright yellow for both Bullish and Bearish
-        randomValueElement.textContent = `Random Value: ${randomValue}`; // Display the random value used
 
+        // Store the sentiment and random value in localStorage
+        localStorage.setItem("sentiment", sentiment);
+        localStorage.setItem("randomValue", randomValue);
+
+        // Reveal the random value and show it
+        randomValueElement.textContent = `Random Value: ${randomValue}`; 
+        randomValueElement.style.display = "block"; // Show the value
         console.log(`Sentiment: ${sentiment}`); // Debugging
 
         // Change the background color based on sentiment
