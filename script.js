@@ -1,23 +1,13 @@
-// Array of sentiments
-const sentiments = ["Bullish", "Bearish"];
-
-// Function to randomly choose a sentiment using Crypto API
-function getSentiment() {
-    const randomIndex = new Uint32Array(1);
-    window.crypto.getRandomValues(randomIndex);
-    const index = randomIndex[0] % sentiments.length;
-    console.log(`Random Value: ${randomIndex[0]}`); // Debugging
-    return { sentiment: sentiments[index], randomValue: randomIndex[0] }; // Return both sentiment and random value
-}
-
 // Function to display sentiment on the page
 function updateSentiment() {
     const sentimentElement = document.getElementById("sentiment");
     const randomValueElement = document.getElementById("random-value");
-    sentimentElement.textContent = "Loading..."; // Display loading initially
-    sentimentElement.style.color = "#000000"; // Black color for loading
 
-    // Wait for 3 seconds before showing the sentiment
+    // Initially, show nothing or a blank space (no "Loading..." text here)
+    sentimentElement.textContent = ""; // Clear previous sentiment or set to an empty string
+    sentimentElement.style.color = "#000000"; // Default color for sentiment element
+
+    // Wait for 3 seconds before showing the sentiment after the countdown ends
     setTimeout(() => {
         const { sentiment, randomValue } = getSentiment(); // Get sentiment and random value
 
@@ -44,10 +34,8 @@ function updateSentiment() {
         }
 
         // Force a refresh to ensure color change is reflected immediately
-        document.body.style.transition = "none"; // Disable transition for immediate change
         document.body.offsetHeight; // Trigger a reflow/repaint
-        document.body.style.transition = "background-color 0.5s ease"; // Enable transition again
-    }, 3000); // 3-second delay
+    }, 3000); // 3-second delay to simulate loading after the countdown
 }
 
 // Function to update the countdown timer
@@ -61,6 +49,8 @@ function updateCountdown() {
 
         // When countdown reaches 0, show "Loading..." and then update sentiment
         if (countdown === 0) {
+            // Show "Loading..." for the sentiment
+            document.getElementById("sentiment").textContent = "Loading...";
             updateSentiment(); // Update sentiment with delay
             countdown = 60; // Reset countdown to 60
         }
@@ -69,17 +59,7 @@ function updateCountdown() {
     }, 1000); // Update every second
 }
 
-// Confetti function (assuming it's already set up with a library like confetti.js)
-function startConfetti() {
-    confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-    });
-}
-
 // Run the countdown and sentiment update when the page loads
 window.onload = function () {
-    updateSentiment(); // Ensure sentiment shows when the page first loads
-    updateCountdown(); // Start the countdown
+    updateCountdown(); // Start the countdown immediately when the page loads
 };
