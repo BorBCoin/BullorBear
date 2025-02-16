@@ -1,28 +1,25 @@
 // Array of sentiments
 const sentiments = ["Bullish", "Bearish"];
 
-// Function to randomly choose a sentiment using Crypto API
-function getSentiment() {
-    const randomIndex = new Uint32Array(1);
-    window.crypto.getRandomValues(randomIndex);
-    const index = randomIndex[0] % sentiments.length;
-    console.log(`Random Value: ${randomIndex[0]}`); // Debugging
-    return { sentiment: sentiments[index], randomValue: randomIndex[0] }; // Return both sentiment and random value
+// Function to get a consistent sentiment for the day based on the current date
+function getDailySentiment() {
+    const today = new Date().toISOString().slice(0, 10);  // Get current date in YYYY-MM-DD format
+    const sentimentIndex = today.charCodeAt(0) % sentiments.length; // Generate a hash based on the first character of the date
+    return sentiments[sentimentIndex]; // Return the corresponding sentiment (Bullish or Bearish)
 }
 
 // Function to display sentiment on the home page
 function updateSentiment() {
     const sentimentElement = document.getElementById("sentiment");
 
-    // Get sentiment and random value
-    const { sentiment, randomValue } = getSentiment(); // Get sentiment and random value
+    // Get the daily sentiment
+    const sentiment = getDailySentiment();
 
     sentimentElement.textContent = sentiment; // Update sentiment text
     sentimentElement.style.color = "#FFD700"; // Bright yellow for both Bullish and Bearish
 
-    // Store the sentiment and random value in localStorage
+    // Store the sentiment in localStorage
     localStorage.setItem("sentiment", sentiment);
-    localStorage.setItem("randomValue", randomValue);
 
     console.log(`Sentiment: ${sentiment}`); // Debugging
 
@@ -70,6 +67,20 @@ function startConfetti() {
 
 // Run the countdown and sentiment update when the page loads
 window.onload = function () {
-    updateSentiment(); // Ensure sentiment shows when the page first loads
+    const storedSentiment = localStorage.getItem("sentiment");
+
+    // If there's no sentiment in localStorage, fetch the daily sentiment
+    if (!storedSentiment) {
+        updateSentiment(); // Ensure sentiment shows when the page first loads
+    } else {
+        // If sentiment is stored, display it directly
+        document.getElementById("sentiment").textContent = storedSentiment;
+        if (storedSentiment === "Bullish") {
+            document.body.style.backgroundColor = "green"; // Bullish sentiment: green
+        } else {
+            document.body.style.backgroundColor = "red"; // Bearish sentiment: red
+        }
+    }
+
     setTimeout(updateCountdown, 500); // Set a small delay before starting the countdown
 };
