@@ -39,12 +39,16 @@ function updateSentiment() {
 
 // Function to update the countdown timer
 function updateCountdown() {
-    let countdown = 60; // Start countdown from 60 seconds
+    // Retrieve the remaining time from localStorage, default to 60 seconds if not set
+    let countdown = parseInt(localStorage.getItem("countdown") || "60", 10);
     const countdownDisplay = document.getElementById("countdown-display");
 
     // Update the countdown every second
     const countdownInterval = setInterval(function () {
         countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
+
+        // Store the countdown value in localStorage to persist
+        localStorage.setItem("countdown", countdown);
 
         // When countdown reaches 0, reset the countdown
         if (countdown === 0) {
@@ -72,4 +76,4 @@ function startConfetti() {
 window.onload = function () {
     updateSentiment(); // Ensure sentiment shows when the page first loads
     setTimeout(updateCountdown, 500); // Set a small delay before starting the countdown
-}; 
+};
