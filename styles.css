@@ -1,4 +1,4 @@
- /* Basic Reset */
+/* Basic Reset */
 * {
     margin: 0;
     padding: 0;
@@ -109,54 +109,53 @@ main {
 
 /* Footer styling */
 footer {
-    background-color: transparent;
-    color: black;
-    padding: 10px;
-    text-align: center;
-    margin-top: 20px;
-    position: fixed;
+    position: absolute;
     bottom: 0;
     width: 100%;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
 }
 
-/* Footer button styling */
-#footer-button-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
+footer a {
+    color: white;
+    text-decoration: none;
 }
 
-/* "Get Started" button */
+footer a:hover {
+    color: #4CAF50;
+}
+
+/* Button Styling */
 #get-started-btn {
-    background-color: #007BFF;  /* Blue background */
-    color: white;  /* White text */
-    font-size: 16px; /* Adjusted to a more appropriate size */
-    font-weight: bold;  /* Bold text */
-    padding: 12px 25px; /* Adjusted padding to fit the text neatly */
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 25px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 10px;  /* Slightly higher on the page */
+    margin-top: 10px;
 }
 
 #get-started-btn:hover {
     background-color: #0056b3;  /* Darker blue on hover */
+    color: #FFFFFF;  /* Keep text white */
 }
 
-/* Footer text styling */
-footer p {
-    font-weight: bold;
-}
-
-/* Footer links styling */
-footer nav a {
-    color: blue;
-    text-decoration: underline;
-    margin: 0 10px;
-}
-
-footer nav a:hover {
-    color: #4CAF50;
-    text-decoration: none;
+/* Responsive Design */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 18px;
+    }
+    nav ul li {
+        margin: 0 10px;
+    }
+    #get-started-btn {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
 }
