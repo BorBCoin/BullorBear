@@ -1,4 +1,4 @@
-/* Basic Reset */
+ /* Basic Reset */
 * {
     margin: 0;
     padding: 0;
@@ -105,21 +105,6 @@ main {
 /* Bullish and Bearish color */
 #sentiment.active {
     color: #FFD700; /* Bright yellow for Bullish and Bearish */
-}
-
-/* Countdown Timer styling - floating box */
-#countdown-box {
-    position: fixed;
-    left: 20px; /* Add a small space from the edge */
-    top: 50%; /* Vertically center */
-    transform: translateY(-50%); /* Proper centering */
-    background-color: rgba(0, 0, 0, 0.7); /* Dark background with opacity */
-    color: white;
-    padding: 15px 30px; /* Padding around the timer */
-    font-size: 22px;
-    border-radius: 10px; /* Rounded corners */
-    z-index: 1000; /* Ensure it's in front of all other content */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Slight shadow for visual depth */
 }
 
 /* Footer styling */
