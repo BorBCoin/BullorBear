@@ -42,6 +42,7 @@ function updateSentiment() {
 }
 
 // Function to update the countdown timer
+let countdownInterval; // Declare a global variable to store the interval ID
 function updateCountdown() {
     let countdown = parseInt(localStorage.getItem("countdown"), 10); // Get saved countdown value
     const lastUpdatedTime = parseInt(localStorage.getItem("lastUpdatedTime"), 10); // Get the timestamp of the last update
@@ -60,8 +61,11 @@ function updateCountdown() {
     // Update the countdown display
     countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
 
+    // If there's an existing interval, clear it before starting a new one
+    if (countdownInterval) clearInterval(countdownInterval);
+
     // Update countdown every second
-    const countdownInterval = setInterval(function () {
+    countdownInterval = setInterval(function () {
         countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
 
         // When countdown reaches 0, reset the countdown
