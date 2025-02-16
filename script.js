@@ -1,7 +1,7 @@
 // Function to fetch sentiment from the server
 async function fetchSentiment() {
     try {
-        const response = await fetch('https://your-server-url/render-path-to-api'); // Replace with your live server URL
+        const response = await fetch('https://bullorbear.onrender.com/api/sentiment'); // Updated URL
         const data = await response.json();
         
         const sentiment = data.sentiment;
