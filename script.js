@@ -6,81 +6,63 @@ function getSentiment() {
     const randomIndex = new Uint32Array(1);
     window.crypto.getRandomValues(randomIndex);
     const index = randomIndex[0] % sentiments.length;
-    return { sentiment: sentiments[index], randomValue: randomIndex[0] }; // Return both sentiment and random value
+    return sentiments[index]; 
 }
 
 // Function to check if 60 seconds have passed since last sentiment change
 function hasOneMinutePassed(lastUpdatedTime) {
     const currentTime = Date.now();
-    return currentTime - lastUpdatedTime >= 60000; // 60 seconds in milliseconds
+    return currentTime - lastUpdatedTime >= 60000;
 }
 
 // Function to update sentiment and store the timestamp
 function updateSentiment() {
     const sentimentElement = document.getElementById("sentiment");
+    const sentiment = getSentiment();
 
-    // Get current sentiment and random value
-    const { sentiment, randomValue } = getSentiment(); // Get sentiment and random value
-
-    sentimentElement.textContent = sentiment; // Update sentiment text
+    sentimentElement.textContent = sentiment;
     sentimentElement.style.color = "#FFD700"; // Bright yellow for both Bullish and Bearish
 
-    // Store the sentiment, random value, and the timestamp of the update
+    // Store the sentiment and exact timestamp of the update
     localStorage.setItem("sentiment", sentiment);
-    localStorage.setItem("randomValue", randomValue);
-    localStorage.setItem("lastUpdatedTime", Date.now()); // Store exact time of the sentiment update
+    localStorage.setItem("lastUpdatedTime", Date.now());
 
-    console.log(`Sentiment: ${sentiment}`); // Debugging
+    console.log(`Sentiment: ${sentiment} | Updated at: ${new Date().toLocaleTimeString()}`);
 
-    // Change the background color based on sentiment
+    document.body.style.backgroundColor = sentiment === "Bullish" ? "green" : "red";
+
     if (sentiment === "Bullish") {
-        document.body.style.backgroundColor = "green"; // Bullish sentiment: green
-        startConfetti(); // Trigger confetti for Bullish sentiment
-    } else {
-        document.body.style.backgroundColor = "red"; // Bearish sentiment: red
+        startConfetti();
     }
 }
 
 // Function to update the countdown timer
-let countdownInterval; // Declare a global variable to store the interval ID
+let countdownInterval;
 function updateCountdown() {
-    let countdown = parseInt(localStorage.getItem("countdown"), 10); // Get saved countdown value
-    const lastUpdatedTime = parseInt(localStorage.getItem("lastUpdatedTime"), 10); // Get the timestamp of the last update
+    const lastUpdatedTime = parseInt(localStorage.getItem("lastUpdatedTime"), 10);
+    if (isNaN(lastUpdatedTime)) return; // Prevent errors if no timestamp exists
 
-    if (isNaN(countdown)) countdown = 60; // If no countdown saved, start from 60
+    function calculateRemainingTime() {
+        const elapsedTime = Math.floor((Date.now() - lastUpdatedTime) / 1000);
+        return Math.max(60 - elapsedTime, 0);
+    }
 
     const countdownDisplay = document.getElementById("countdown-display");
 
-    // Calculate the time elapsed since the last page load (or reload)
-    const elapsedTime = Math.floor((Date.now() - lastUpdatedTime) / 1000); // Time elapsed in seconds
-    countdown -= elapsedTime; // Subtract the elapsed time from the countdown
-
-    // Ensure countdown doesn't go below 0
-    if (countdown < 0) countdown = 0;
-
-    // Update the countdown display
-    countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
-
-    // If there's an existing interval, clear it before starting a new one
-    if (countdownInterval) clearInterval(countdownInterval);
-
-    // Update countdown every second
-    countdownInterval = setInterval(function () {
+    function updateDisplay() {
+        let countdown = calculateRemainingTime();
         countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
 
-        // When countdown reaches 0, reset the countdown
         if (countdown === 0) {
-            updateSentiment(); // Update sentiment when timer reaches 0
-            countdown = 60; // Reset countdown to 60
-            localStorage.setItem("countdown", countdown); // Store updated countdown value
-            setTimeout(() => {
-                updateCountdown(); // Restart countdown after sentiment update
-            }, 3000); // Wait for 3 seconds to allow sentiment update
+            updateSentiment(); // Reset sentiment when countdown hits 0
+            updateCountdown(); // Restart countdown
         }
+    }
 
-        countdown--; // Decrease countdown by 1 second
-        localStorage.setItem("countdown", countdown); // Store updated countdown value in localStorage
-    }, 1000); // Update every second
+    updateDisplay(); // Update immediately on load
+
+    if (countdownInterval) clearInterval(countdownInterval);
+    countdownInterval = setInterval(updateDisplay, 1000); // Update every second
 }
 
 // Confetti function (assuming it's already set up with a library like confetti.js)
@@ -92,23 +74,17 @@ function startConfetti() {
     });
 }
 
-// Initialize and run on page load
+// Initialize on page load
 window.onload = function () {
-    const sentiment = localStorage.getItem("sentiment"); // Get saved sentiment
-    const lastUpdatedTime = parseInt(localStorage.getItem("lastUpdatedTime"), 10); // Get saved last updated timestamp
-    let countdown = parseInt(localStorage.getItem("countdown"), 10); // Get saved countdown value
+    const sentiment = localStorage.getItem("sentiment");
+    const lastUpdatedTime = parseInt(localStorage.getItem("lastUpdatedTime"), 10);
 
-    if (!sentiment || !lastUpdatedTime || hasOneMinutePassed(lastUpdatedTime)) {
-        // If no sentiment or more than 60 seconds have passed, update the sentiment
-        updateSentiment();
-        countdown = 60; // Reset countdown to 60
-        localStorage.setItem("countdown", countdown); // Store countdown value
+    if (!sentiment || isNaN(lastUpdatedTime) || hasOneMinutePassed(lastUpdatedTime)) {
+        updateSentiment(); // Generate new sentiment if none exists or time has passed
     } else {
-        // Use stored sentiment and countdown if within 60 seconds
         document.getElementById("sentiment").textContent = sentiment;
         document.body.style.backgroundColor = sentiment === "Bullish" ? "green" : "red";
     }
 
-    // Start or resume the countdown timer
-    updateCountdown(); // Start the countdown timer when the page loads
+    updateCountdown(); // Start countdown
 };
