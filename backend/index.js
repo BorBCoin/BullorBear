@@ -1,12 +1,6 @@
 const express = require('express');
-const cors = require('cors'); // Import CORS
 const app = express();
 const port = process.env.PORT || 3000;
-
-// Enable CORS for Netlify domain
-app.use(cors({
-    origin: 'https://borbcoin.netlify.app'
-}));
 
 // Array of sentiments
 const sentiments = ["Bullish", "Bearish"];
@@ -16,6 +10,14 @@ let sentimentData = {
     sentiment: "Bullish", // Default initial sentiment
     lastUpdatedTime: Date.now(), // Timestamp of the last update
 };
+
+// Enable CORS
+const cors = require('cors');
+app.use(cors({
+    origin: 'https://borbcoin.netlify.app', // Allow requests from Netlify
+    methods: ['GET'],
+    allowedHeaders: ['Content-Type'],
+}));
 
 // API to get sentiment and countdown time
 app.get('/api/sentiment', (req, res) => {
