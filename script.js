@@ -83,4 +83,3 @@ window.onload = function () {
     updateSentiment(); // Ensure sentiment shows when the page first loads
     updateCountdown(); // Start the countdown
 };
-
