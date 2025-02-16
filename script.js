@@ -54,7 +54,7 @@ function updateCountdown() {
 
     function updateDisplay() {
         let countdown = calculateRemainingTime();
-        countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
+        countdownDisplay.textContent = countdown;
 
         if (countdown === 0) {
             updateSentiment(); // Reset sentiment when countdown hits 0
@@ -89,6 +89,10 @@ window.onload = function () {
         document.getElementById("sentiment").textContent = sentiment;
         document.body.style.backgroundColor = sentiment === "Bullish" ? "green" : "red";
     }
+
+    updateCountdown(); // Start countdown
+};
+
 
     updateCountdown(); // Start countdown
 };
