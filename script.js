@@ -6,7 +6,6 @@ async function fetchSentiment() {
         
         const sentiment = data.sentiment;
         const lastUpdatedTime = data.lastUpdatedTime;
-        const randomValue = data.randomValue;
 
         // Update the sentiment on the page
         const sentimentElement = document.getElementById("sentiment");
@@ -15,7 +14,6 @@ async function fetchSentiment() {
 
         // Store the data in localStorage for fallback
         localStorage.setItem("sentiment", sentiment);
-        localStorage.setItem("randomValue", randomValue);
         localStorage.setItem("lastUpdatedTime", lastUpdatedTime);
 
         // Change background color based on sentiment
@@ -44,7 +42,7 @@ function updateCountdown(lastUpdatedTime) {
 
         if (countdown === 0) {
             fetchSentiment(); // Reset sentiment when countdown hits 0
-            updateCountdown(); // Restart countdown
+            updateCountdown(Date.now()); // Restart countdown from current time
         }
     }
 
