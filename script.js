@@ -1,4 +1,4 @@
- // Array of sentiments
+// Array of sentiments
 const sentiments = ["Bullish", "Bearish"];
 
 // Function to randomly choose a sentiment using Crypto API
@@ -10,11 +10,17 @@ function getSentiment() {
     return { sentiment: sentiments[index], randomValue: randomIndex[0] }; // Return both sentiment and random value
 }
 
-// Function to display sentiment on the home page
+// Function to check if 60 seconds have passed since last sentiment change
+function hasOneMinutePassed(lastUpdatedTime) {
+    const currentTime = Date.now();
+    return currentTime - lastUpdatedTime >= 60000; // 60 seconds in milliseconds
+}
+
+// Function to update sentiment
 function updateSentiment() {
     const sentimentElement = document.getElementById("sentiment");
 
-    // Get sentiment and random value
+    // Get current sentiment and random value
     const { sentiment, randomValue } = getSentiment(); // Get sentiment and random value
 
     sentimentElement.textContent = sentiment; // Update sentiment text
@@ -23,6 +29,9 @@ function updateSentiment() {
     // Store the sentiment and random value in localStorage
     localStorage.setItem("sentiment", sentiment);
     localStorage.setItem("randomValue", randomValue);
+
+    // Store the last updated timestamp
+    localStorage.setItem("lastUpdatedTime", Date.now());
 
     console.log(`Sentiment: ${sentiment}`); // Debugging
 
@@ -68,8 +77,21 @@ function startConfetti() {
     });
 }
 
-// Run the countdown and sentiment update when the page loads
+// Initialize and run on page load
 window.onload = function () {
-    updateSentiment(); // Ensure sentiment shows when the page first loads
-    setTimeout(updateCountdown, 500); // Set a small delay before starting the countdown
-}; 
+    const lastUpdatedTime = parseInt(localStorage.getItem("lastUpdatedTime"), 10);
+    const sentiment = localStorage.getItem("sentiment");
+
+    if (sentiment && hasOneMinutePassed(lastUpdatedTime)) {
+        // If more than 60 seconds have passed, update the sentiment
+        updateSentiment();
+    } else if (sentiment) {
+        // Use stored sentiment if it's within the 60 seconds
+        document.getElementById("sentiment").textContent = sentiment;
+    } else {
+        // If no sentiment stored, set initial sentiment
+        updateSentiment();
+    }
+
+    updateCountdown(); // Start the countdown timer when the page loads
+};
