@@ -42,6 +42,9 @@ function updateSentiment() {
             document.body.style.backgroundColor = "red"; // Bearish sentiment: red
             console.log("Background color set to red"); // Debugging
         }
+
+        // Force a refresh to ensure color change is reflected immediately
+        document.body.style.transition = "background-color 0.5s ease";
     }, 3000); // 3-second delay
 }
 
