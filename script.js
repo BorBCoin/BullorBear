@@ -32,12 +32,16 @@ function updateSentiment() {
 
     // Change the background color based on sentiment
     if (sentiment === "Bullish") {
-        document.body.style.backgroundColor = "green"; // Bullish sentiment: green
-        console.log("Background color set to green"); // Debugging
-        startConfetti(); // Trigger confetti for Bullish sentiment
+        setTimeout(function () {
+            document.body.style.backgroundColor = "green"; // Bullish sentiment: green
+            console.log("Background color set to green"); // Debugging
+            startConfetti(); // Trigger confetti for Bullish sentiment
+        }, 500); // Small delay to ensure everything loads first
     } else {
-        document.body.style.backgroundColor = "red"; // Bearish sentiment: red
-        console.log("Background color set to red"); // Debugging
+        setTimeout(function () {
+            document.body.style.backgroundColor = "red"; // Bearish sentiment: red
+            console.log("Background color set to red"); // Debugging
+        }, 500); // Small delay
     }
 
     // Force a refresh to ensure color change is reflected immediately
@@ -79,6 +83,8 @@ function startConfetti() {
 
 // Run the countdown and sentiment update when the page loads
 window.onload = function () {
-    updateSentiment(); // Ensure sentiment shows when the page first loads
-    updateCountdown(); // Start the countdown
+    setTimeout(function () {
+        updateSentiment(); // Ensure sentiment shows when the page first loads
+        updateCountdown(); // Start the countdown with a slight delay
+    }, 500); // Small delay to ensure everything is loaded
 };
