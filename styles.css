@@ -107,6 +107,20 @@ main {
     color: #FFD700; /* Bright yellow for Bullish and Bearish */
 }
 
+/* Persistent Timer */
+#persistent-timer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Dark background with opacity */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 20px;
+    z-index: 1000; /* Ensure it's in front of all other content */
+}
+
 /* Footer styling */
 footer {
     background-color: transparent;
