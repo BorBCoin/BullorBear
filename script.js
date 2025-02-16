@@ -14,35 +14,40 @@ function getSentiment() {
 function updateSentiment() {
     const sentimentElement = document.getElementById("sentiment");
     const randomValueElement = document.getElementById("random-value");
+    sentimentElement.textContent = "Loading..."; // Display loading initially
+    sentimentElement.style.color = "#000000"; // Black color for loading
 
-    // Immediately update sentiment and background color
-    const { sentiment, randomValue } = getSentiment();
-    sentimentElement.textContent = sentiment; // Update sentiment text
-    sentimentElement.style.color = "#FFD700"; // Bright yellow for both Bullish and Bearish
+    // Wait for 3 seconds before showing the sentiment
+    setTimeout(() => {
+        const { sentiment, randomValue } = getSentiment(); // Get sentiment and random value
 
-    // Store the sentiment and random value in localStorage
-    localStorage.setItem("sentiment", sentiment);
-    localStorage.setItem("randomValue", randomValue);
+        sentimentElement.textContent = sentiment; // Update sentiment text
+        sentimentElement.style.color = "#FFD700"; // Bright yellow for both Bullish and Bearish
 
-    // Show the random value
-    randomValueElement.textContent = `Random Value: ${randomValue}`; 
-    randomValueElement.style.display = "block"; // Show the value
-    console.log(`Sentiment: ${sentiment}`); // Debugging
+        // Store the sentiment and random value in localStorage
+        localStorage.setItem("sentiment", sentiment);
+        localStorage.setItem("randomValue", randomValue);
 
-    // Change the background color based on sentiment
-    if (sentiment === "Bullish") {
-        document.body.style.backgroundColor = "green"; // Bullish sentiment: green
-        console.log("Background color set to green"); // Debugging
-        startConfetti(); // Trigger confetti for Bullish sentiment
-    } else {
-        document.body.style.backgroundColor = "red"; // Bearish sentiment: red
-        console.log("Background color set to red"); // Debugging
-    }
+        // Reveal the random value and show it
+        randomValueElement.textContent = `Random Value: ${randomValue}`; 
+        randomValueElement.style.display = "block"; // Show the value
+        console.log(`Sentiment: ${sentiment}`); // Debugging
 
-    // Force a refresh to ensure color change is reflected immediately
-    document.body.style.transition = "none"; // Disable transition for immediate change
-    document.body.offsetHeight; // Trigger a reflow/repaint
-    document.body.style.transition = "background-color 0.5s ease"; // Enable transition again
+        // Change the background color based on sentiment
+        if (sentiment === "Bullish") {
+            document.body.style.backgroundColor = "green"; // Bullish sentiment: green
+            console.log("Background color set to green"); // Debugging
+            startConfetti(); // Trigger confetti for Bullish sentiment
+        } else {
+            document.body.style.backgroundColor = "red"; // Bearish sentiment: red
+            console.log("Background color set to red"); // Debugging
+        }
+
+        // Force a refresh to ensure color change is reflected immediately
+        document.body.style.transition = "none"; // Disable transition for immediate change
+        document.body.offsetHeight; // Trigger a reflow/repaint
+        document.body.style.transition = "background-color 0.5s ease"; // Enable transition again
+    }, 3000); // 3-second delay
 }
 
 // Function to update the countdown timer
@@ -78,3 +83,4 @@ window.onload = function () {
     updateSentiment(); // Ensure sentiment shows when the page first loads
     updateCountdown(); // Start the countdown
 };
+
