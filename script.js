@@ -44,11 +44,23 @@ function updateSentiment() {
 // Function to update the countdown timer
 function updateCountdown() {
     let countdown = parseInt(localStorage.getItem("countdown"), 10); // Get saved countdown value
+    const lastUpdatedTime = parseInt(localStorage.getItem("lastUpdatedTime"), 10); // Get the timestamp of the last update
+
     if (isNaN(countdown)) countdown = 60; // If no countdown saved, start from 60
 
     const countdownDisplay = document.getElementById("countdown-display");
 
-    // Update the countdown every second
+    // Calculate the time elapsed since the last page load
+    const elapsedTime = Math.floor((Date.now() - lastUpdatedTime) / 1000); // Time elapsed in seconds
+    countdown -= elapsedTime; // Subtract the elapsed time from the countdown
+
+    // Ensure countdown doesn't go below 0
+    if (countdown < 0) countdown = 0;
+
+    // Update the countdown display
+    countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
+
+    // Update countdown every second
     const countdownInterval = setInterval(function () {
         countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
 
