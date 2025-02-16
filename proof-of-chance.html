@@ -37,8 +37,8 @@
 
             // Display the retrieved data
             if (sentiment && randomValue) {
-                document.getElementById("sentiment-result").textContent = Sentiment: ${sentiment};
-                document.getElementById("random-value").textContent = Random Value: ${randomValue};
+                document.getElementById("sentiment-result").textContent = `Sentiment: ${sentiment}`;
+                document.getElementById("random-value").textContent = `Random Value: ${randomValue}`;
 
                 // Change background color based on sentiment
                 if (sentiment === "Bullish") {
