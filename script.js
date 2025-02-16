@@ -1,97 +1,65 @@
-// Array of sentiments
-const sentiments = ["Bullish", "Bearish"];
-
-// Function to randomly choose a sentiment using Crypto API
-function getSentiment() {
-    const randomIndex = new Uint32Array(1);
-    window.crypto.getRandomValues(randomIndex);
-    const index = randomIndex[0] % sentiments.length;
-    return { sentiment: sentiments[index], randomValue: randomIndex[0] }; // Return both sentiment and random value
+// Function to generate the random sentiment
+function generateSentiment() {
+    const sentiments = ["Bullish", "Bearish"];
+    const randomSentiment = sentiments[Math.floor(Math.random() * sentiments.length)];
+    localStorage.setItem("sentiment", randomSentiment);  // Store sentiment
+    return randomSentiment;
 }
 
-// Function to check if 60 seconds have passed
-function checkTime() {
-    const lastUpdatedTime = localStorage.getItem("lastUpdatedTime");
-    if (lastUpdatedTime) {
-        const timeElapsed = (Date.now() - lastUpdatedTime) / 1000;
-        return timeElapsed > 60;
-    }
-    return true; // If no lastUpdatedTime exists, consider it time to update
-}
-
-// Function to update the sentiment and countdown
+// Function to update sentiment text and page styling
 function updateSentiment() {
-    const { sentiment, randomValue } = getSentiment();
+    const sentiment = localStorage.getItem("sentiment") || generateSentiment(); // Fetch or generate sentiment
+    document.getElementById("sentiment").textContent = sentiment; // Display sentiment
 
-    // Update localStorage with the new sentiment and random value
-    localStorage.setItem("sentiment", sentiment);
-    localStorage.setItem("randomValue", randomValue);
-
-    // Display the sentiment on the page
-    const sentimentDisplay = document.getElementById("sentiment");
-    sentimentDisplay.textContent = sentiment;
-
-    // Display the random value on the Proof of Chance page
-    const randomValueDisplay = document.getElementById("random-value");
-    if (randomValueDisplay) {
-        randomValueDisplay.textContent = `Random Value: ${randomValue}`;
-    }
-
-    // Update the background color for the sentiment
+    // Change background color based on sentiment
     if (sentiment === "Bullish") {
-        document.body.style.backgroundColor = "green";
+        document.body.style.backgroundColor = "green"; // Bullish sentiment: green
     } else {
-        document.body.style.backgroundColor = "red";
+        document.body.style.backgroundColor = "red"; // Bearish sentiment: red
     }
 
-    // Update confetti for Bullish sentiment
-    if (sentiment === "Bullish") {
-        confetti({
-            particleCount: 100,
-            angle: 60,
-            spread: 45,
-            origin: { x: 0, y: 0.8 }
-        });
-        confetti({
-            particleCount: 100,
-            angle: 120,
-            spread: 45,
-            origin: { x: 1, y: 0.8 }
-        });
-    }
-
-    // Store the last update time
-    localStorage.setItem("lastUpdatedTime", Date.now().toString());
+    // Save random value to localStorage for proof of chance page
+    const randomValue = Math.random(); // Generate a random value
+    localStorage.setItem("randomValue", randomValue);
 }
 
-// Start the countdown and update logic
+// Countdown timer logic
+let countdownTime = 60; // Countdown time in seconds
+
 function updateCountdown() {
     const countdownDisplay = document.getElementById("countdown-display");
-    const lastUpdatedTime = parseInt(localStorage.getItem("lastUpdatedTime"), 10);
+    countdownDisplay.textContent = `Time remaining: ${countdownTime} seconds`;
 
-    if (isNaN(lastUpdatedTime)) return;
-
-    function calculateRemainingTime() {
-        const elapsedTime = Math.floor((Date.now() - lastUpdatedTime) / 1000);
-        return Math.max(60 - elapsedTime, 0);
+    if (countdownTime <= 0) {
+        // Reset countdown
+        countdownTime = 60;
+        generateSentiment();  // Update sentiment when countdown hits zero
+        updateSentiment();     // Update sentiment display
     }
 
-    function updateDisplay() {
-        let countdown = calculateRemainingTime();
-        countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
+    countdownTime--;
+}
 
-        if (countdown === 0) {
-            updateSentiment(); // Update sentiment when countdown hits 0
-            updateCountdown(); // Restart countdown
-        }
+// Persistent timer (floating box on the left side)
+function updatePersistentTimer() {
+    const persistentTimer = document.getElementById("persistent-timer");
+    let persistentCountdownTime = countdownTime;
+
+    persistentTimer.textContent = `Time remaining: ${persistentCountdownTime} seconds`;
+    
+    if (persistentCountdownTime <= 0) {
+        persistentCountdownTime = 60;
+        generateSentiment();
+        updateSentiment();
     }
-
-    updateDisplay();
-    setInterval(updateDisplay, 1000); // Update every second
+    
+    persistentCountdownTime--;
 }
 
-// Call initial update
-if (checkTime()) {
-    updateSentiment();
-}
-updateCountdown();
+// Initialize sentiment and countdown
+document.addEventListener("DOMContentLoaded", function() {
+    updateSentiment(); // Initialize the sentiment display on page load
+    setInterval(updateCountdown, 1000); // Update countdown every second
+    setInterval(updatePersistentTimer, 1000); // Update persistent timer every second
+});
+
