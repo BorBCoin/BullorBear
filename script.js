@@ -1,32 +1,70 @@
-// Function to fetch sentiment and countdown from the server
-async function getSentiment() {
-    const response = await fetch('http://localhost:3000/api/sentiment'); // Update with live API URL
-    const data = await response.json();
+// Function to fetch sentiment from the server
+async function fetchSentiment() {
+    try {
+        const response = await fetch('https://your-server-url/render-path-to-api'); // Replace with your live server URL
+        const data = await response.json();
+        
+        const sentiment = data.sentiment;
+        const lastUpdatedTime = data.lastUpdatedTime;
+        const randomValue = data.randomValue;
 
-    const sentiment = data.sentiment;
-    const timeLeft = data.timeLeft;
+        // Update the sentiment on the page
+        const sentimentElement = document.getElementById("sentiment");
+        sentimentElement.textContent = sentiment;
+        sentimentElement.style.color = "#FFD700"; // Bright yellow for both Bullish and Bearish
 
-    // Display sentiment on the webpage
-    document.getElementById("sentiment").textContent = sentiment;
-    document.body.style.backgroundColor = sentiment === "Bullish" ? "green" : "red";
+        // Store the data in localStorage for fallback
+        localStorage.setItem("sentiment", sentiment);
+        localStorage.setItem("randomValue", randomValue);
+        localStorage.setItem("lastUpdatedTime", lastUpdatedTime);
 
-    // Display countdown
+        // Change background color based on sentiment
+        document.body.style.backgroundColor = sentiment === "Bullish" ? "green" : "red";
+
+        if (sentiment === "Bullish") {
+            startConfetti();
+        }
+    } catch (error) {
+        console.error("Error fetching sentiment:", error);
+    }
+}
+
+// Update countdown logic
+function updateCountdown(lastUpdatedTime) {
     const countdownDisplay = document.getElementById("countdown-display");
-    countdownDisplay.textContent = `Time remaining: ${timeLeft} seconds`;
 
-    // Trigger confetti for Bullish sentiment
-    if (sentiment === "Bullish") {
-        startConfetti();
+    function calculateRemainingTime() {
+        const elapsedTime = Math.floor((Date.now() - lastUpdatedTime) / 1000);
+        return Math.max(60 - elapsedTime, 0);
+    }
+
+    function updateDisplay() {
+        let countdown = calculateRemainingTime();
+        countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
+
+        if (countdown === 0) {
+            fetchSentiment(); // Reset sentiment when countdown hits 0
+            updateCountdown(); // Restart countdown
+        }
+    }
+
+    updateDisplay();
+    setInterval(updateDisplay, 1000); // Update every second
 }
 
-// Call the API to get sentiment when the page loads
-getSentiment();
+// Initialize page with data
+window.onload = async function () {
+    const sentiment = localStorage.getItem("sentiment");
+    const lastUpdatedTime = parseInt(localStorage.getItem("lastUpdatedTime"), 10);
 
-// Confetti function (assuming it's already set up with a library like confetti.js)
-function startConfetti() {
-    confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-    });
-}
+    // If no sentiment or if one minute has passed, fetch data from server
+    if (!sentiment || isNaN(lastUpdatedTime)) {
+        await fetchSentiment(); // Fetch data from the server if necessary
+    } else {
+        // Use stored sentiment and update the page with it
+        document.getElementById("sentiment").textContent = sentiment;
+        document.body.style.backgroundColor = sentiment === "Bullish" ? "green" : "red";
+    }
+
+    updateCountdown(lastUpdatedTime); // Start countdown
+};
