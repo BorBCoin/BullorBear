@@ -35,7 +35,7 @@
             const sentiment = localStorage.getItem("sentiment");
             const randomValue = localStorage.getItem("randomValue");
 
-            // Display the retrieved data
+            // Display the retrieved data or default if not found
             if (sentiment && randomValue) {
                 document.getElementById("sentiment-result").textContent = `Sentiment: ${sentiment}`;
                 document.getElementById("random-value").textContent = `Random Value: ${randomValue}`;
@@ -47,4 +47,3 @@
     </script>
 </body>
 </html>
-
