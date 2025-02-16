@@ -10,7 +10,7 @@ function getSentiment() {
     return { sentiment: sentiments[index], randomValue: randomIndex[0] }; // Return both sentiment and random value
 }
 
-// Function to display sentiment on the page
+// Function to display sentiment on the home page
 function updateSentiment() {
     const sentimentElement = document.getElementById("sentiment");
     const randomValueElement = document.getElementById("random-value");
