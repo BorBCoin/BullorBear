@@ -6,6 +6,15 @@ const port = process.env.PORT || 3000;
 // Use CORS middleware
 app.use(cors()); // Allow all origins
 
+// Array of sentiments
+const sentiments = ["Bullish", "Bearish"];
+
+// Store sentiment and timestamp globally
+let sentimentData = {
+    sentiment: "Bullish", // Default initial sentiment
+    lastUpdatedTime: Date.now(), // Timestamp of the last update
+};
+
 // Helper function to generate a random value for Proof of Chance
 function generateRandomValue() {
     return Math.floor(Math.random() * 1000000); // Random value between 0 and 1,000,000
@@ -22,25 +31,24 @@ function generateSentiment(randomValue) {
 
 // API to get sentiment, timestamp, and random value
 app.get('/api/sentiment', (req, res) => {
-    const randomValue = generateRandomValue();
+    const randomValue = generateRandomValue(); // Generate random value
+
     const sentiment = generateSentiment(randomValue); // Determine sentiment based on random value
 
     // Store the sentiment and timestamp globally
-    let sentimentData = {
-        sentiment: sentiment,
-        lastUpdatedTime: Date.now(), // Timestamp of the last update
-    };
+    sentimentData.sentiment = sentiment;
+    sentimentData.lastUpdatedTime = Date.now(); // Update timestamp
 
     const currentTime = Date.now();
     const elapsedTime = Math.floor((currentTime - sentimentData.lastUpdatedTime) / 1000);
     const timeLeft = Math.max(60 - elapsedTime, 0);
 
-    // Send the sentiment, timestamp, time left, and random value
+    // Send the sentiment, timestamp, time left, and random value in the response
     res.json({
         sentiment: sentimentData.sentiment,
-        lastUpdatedTime: sentimentData.lastUpdatedTime,
-        timeLeft: timeLeft,
-        randomValue: randomValue, // Add random value to the response
+        lastUpdatedTime: sentimentData.lastUpdatedTime, // Send the correct timestamp
+        timeLeft: timeLeft, // Send time left
+        randomValue: randomValue, // Include random value in the response
     });
 });
 
