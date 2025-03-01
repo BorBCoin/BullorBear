@@ -29,15 +29,16 @@ function generateSentiment(randomValue) {
 
 // API to get sentiment, timestamp, and random value
 app.get('/api/sentiment', (req, res) => {
-    const randomValue = generateRandomValue(); 
-
-    console.log("Generated Random Value:", randomValue);  // <-- Log random value here to verify
+    const randomValue = generateRandomValue();
+    
+    // Log the generated random value to confirm it's working
+    console.log("Generated Random Value:", randomValue);
 
     if (randomValue === null) {
         return res.status(400).json({ error: 'Random value generation failed' });
     }
 
-    const sentiment = generateSentiment(randomValue);
+    const sentiment = generateSentiment(randomValue); 
 
     sentimentData.sentiment = sentiment;
     sentimentData.randomValue = randomValue;
@@ -47,11 +48,18 @@ app.get('/api/sentiment', (req, res) => {
     const elapsedTime = Math.floor((currentTime - sentimentData.lastUpdatedTime) / 1000);
     const timeLeft = Math.max(60 - elapsedTime, 0);
 
-    // Ensure the response contains the random value and sentiment
+    // Log the complete data response
+    console.log({
+        sentiment: sentimentData.sentiment,
+        randomValue: sentimentData.randomValue,
+        lastUpdatedTime: sentimentData.lastUpdatedTime,
+        timeLeft: timeLeft,
+    });
+
     res.json({
-        sentiment: sentimentData.sentiment, 
-        randomValue: sentimentData.randomValue, // <-- Ensure randomValue is here
-        lastUpdatedTime: sentimentData.lastUpdatedTime, 
+        sentiment: sentimentData.sentiment,
+        randomValue: sentimentData.randomValue,
+        lastUpdatedTime: sentimentData.lastUpdatedTime,
         timeLeft: timeLeft,
     });
 });
