@@ -48,7 +48,7 @@ app.get('/api/sentiment', (req, res) => {
         sentiment: sentimentData.sentiment,
         lastUpdatedTime: sentimentData.lastUpdatedTime, // Send the correct timestamp
         timeLeft: timeLeft, // Send time left
-        randomValue: randomValue, // Include random value in the response
+        randomValue: randomValue, // **Include random value** in the response
     });
 });
 
