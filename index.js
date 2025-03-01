@@ -33,6 +33,10 @@ function generateSentiment(randomValue) {
 app.get('/api/sentiment', (req, res) => {
     const randomValue = generateRandomValue(); // Generate random value
 
+    if (randomValue === undefined || randomValue === null) {
+        return res.status(400).json({ error: "Random value is required to determine sentiment." });
+    }
+
     const sentiment = generateSentiment(randomValue); // Determine sentiment based on random value
 
     // Store the sentiment and timestamp globally
@@ -46,8 +50,8 @@ app.get('/api/sentiment', (req, res) => {
     // Send the sentiment, timestamp, time left, and random value in the response
     res.json({
         sentiment: sentimentData.sentiment,
-        lastUpdatedTime: sentimentData.lastUpdatedTime, // Send the correct timestamp
-        timeLeft: timeLeft, // Send time left
+        lastUpdatedTime: sentimentData.lastUpdatedTime,
+        timeLeft: timeLeft,
         randomValue: randomValue, // Include random value in the response
     });
 });
@@ -56,3 +60,4 @@ app.get('/api/sentiment', (req, res) => {
 app.listen(port, () => {
     console.log(`Server running on https://bullorbear.onrender.com`); // Change this to show the public URL instead of localhost
 });
+
