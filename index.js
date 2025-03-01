@@ -27,7 +27,7 @@ function generateSentiment(randomValue) {
     }
 }
 
-// API to get sentiment, timestamp, and random value
+// API to get sentiment, timestamp, random value, and timer countdown
 app.get('/api/sentiment', (req, res) => {
     const randomValue = generateRandomValue(); 
 
