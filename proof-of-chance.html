@@ -30,25 +30,25 @@
     </footer>
 
     <script>
-        // Retrieve the sentiment and random value from backend API
+        // Fetch sentiment and random value from backend API
         window.onload = async function() {
             try {
-                const response = await fetch('https://bullorbear.onrender.com/api/sentiment'); // Corrected backend URL
+                const response = await fetch('https://bullorbear.onrender.com/api/sentiment');
                 const data = await response.json();
 
                 const sentiment = data.sentiment;
-                const randomValue = data.randomValue; // Assuming the backend returns a random value to prove legitimacy
+                const randomValue = data.randomValue; // Ensure the random value is fetched
 
-                // Display the retrieved data
-                if (sentiment && randomValue) {
+                // Display sentiment and random value
+                if (sentiment && randomValue !== undefined) {
                     document.getElementById("sentiment-result").textContent = `Sentiment: ${sentiment}`;
                     document.getElementById("random-value").textContent = `Random Value: ${randomValue}`;
 
                     // Change background color based on sentiment
                     if (sentiment === "Bullish") {
-                        document.body.style.backgroundColor = "green"; // Bullish sentiment: green
+                        document.body.style.backgroundColor = "green";
                     } else {
-                        document.body.style.backgroundColor = "red"; // Bearish sentiment: red
+                        document.body.style.backgroundColor = "red";
                     }
                 } else {
                     document.getElementById("sentiment-result").textContent = "No sentiment data found.";
