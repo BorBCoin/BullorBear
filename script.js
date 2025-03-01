@@ -1,7 +1,7 @@
 // Function to fetch sentiment from the server
 async function fetchSentiment() {
     try {
-        const response = await fetch('https://bullorbear.onrender.com/api/sentiment'); // Updated URL
+        const response = await fetch('https://bullorbear.onrender.com/api/sentiment'); // Corrected backend URL
         const data = await response.json();
         
         const sentiment = data.sentiment;
@@ -25,6 +25,15 @@ async function fetchSentiment() {
     } catch (error) {
         console.error("Error fetching sentiment:", error);
     }
+}
+
+// Function to start confetti animation when sentiment is bullish
+function startConfetti() {
+    confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+    });
 }
 
 // Update countdown logic
