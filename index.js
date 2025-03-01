@@ -6,13 +6,11 @@ const port = process.env.PORT || 3000; // Use environment variable PORT for Rend
 // Use CORS middleware
 app.use(cors()); // Allow all origins
 
-// Array of sentiments
-const sentiments = ["Bullish", "Bearish"];
-
 // Store sentiment and timestamp globally
 let sentimentData = {
-    sentiment: "Bullish", // Default initial sentiment
+    sentiment: null, // Initially no sentiment
     lastUpdatedTime: Date.now(), // Timestamp of the last update
+    randomValue: null // Initially no random value
 };
 
 // Helper function to generate a random value for Proof of Chance
@@ -33,14 +31,15 @@ function generateSentiment(randomValue) {
 app.get('/api/sentiment', (req, res) => {
     const randomValue = generateRandomValue(); // Generate random value
 
-    if (randomValue === undefined || randomValue === null) {
-        return res.status(400).json({ error: "Random value is required to determine sentiment." });
+    if (randomValue === null) {
+        return res.status(400).json({ error: 'Random value generation failed' }); // Error if no random value
     }
 
     const sentiment = generateSentiment(randomValue); // Determine sentiment based on random value
 
     // Store the sentiment and timestamp globally
     sentimentData.sentiment = sentiment;
+    sentimentData.randomValue = randomValue;
     sentimentData.lastUpdatedTime = Date.now(); // Update timestamp
 
     const currentTime = Date.now();
@@ -50,14 +49,13 @@ app.get('/api/sentiment', (req, res) => {
     // Send the sentiment, timestamp, time left, and random value in the response
     res.json({
         sentiment: sentimentData.sentiment,
-        lastUpdatedTime: sentimentData.lastUpdatedTime,
-        timeLeft: timeLeft,
-        randomValue: randomValue, // Include random value in the response
+        randomValue: sentimentData.randomValue, // Include random value in the response
+        lastUpdatedTime: sentimentData.lastUpdatedTime, // Send the correct timestamp
+        timeLeft: timeLeft, // Send time left
     });
 });
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server running on https://bullorbear.onrender.com`); // Change this to show the public URL instead of localhost
+    console.log(`Server running on https://bullorbear.onrender.com`);
 });
-
