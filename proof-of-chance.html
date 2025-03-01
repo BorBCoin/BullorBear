@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proof of Chance</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Proof of Chance</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Back to Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>How Today's Sentiment Was Determined</h2>
+            <p>Today's sentiment was generated randomly using a secure method.</p>
+            <p id="sentiment-result">Loading...</p> <!-- Display sentiment result -->
+            <p id="random-value">Loading...</p> <!-- Display random value -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Bull or Bear Coin. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Retrieve the sentiment and random value from localStorage
+        window.onload = function() {
+            const sentiment = localStorage.getItem("sentiment");
+            const randomValue = localStorage.getItem("randomValue");
+
+            // Display the retrieved data
+            if (sentiment && randomValue) {
+                document.getElementById("sentiment-result").textContent = `Sentiment: ${sentiment}`;
+                document.getElementById("random-value").textContent = `Random Value: ${randomValue}`;
+
+                // Change background color based on sentiment
+                if (sentiment === "Bullish") {
+                    document.body.style.backgroundColor = "green"; // Bullish sentiment: green
+                } else {
+                    document.body.style.backgroundColor = "red"; // Bearish sentiment: red
+                }
+            } else {
+                document.getElementById("sentiment-result").textContent = "No sentiment data found.";
+                document.getElementById("random-value").textContent = "No random value data found.";
+            }
+        };
+    </script>
+</body>
+</html>

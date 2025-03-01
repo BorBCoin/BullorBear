@@ -1,0 +1,161 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Prevent scrolling */
+html, body {
+    overflow: hidden; /* Disable scrolling */
+    height: 100%; /* Ensure full height is utilized */
+}
+
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height of the viewport */
+    text-align: center;
+    position: relative; /* Ensure body content stays on top of canvas */
+    transition: background-color 0.5s ease; /* Smooth background color change */
+}
+
+/* Confetti canvas styling */
+canvas {
+    position: fixed; /* Keep it fixed on the screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999999; /* Ensure confetti is in front of everything */
+    pointer-events: none; /* Allow interactions with other elements behind it */
+}
+
+/* Header and Navigation Styling */
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    width: 100%;
+    position: absolute; /* Keep header at the top */
+    top: 0;
+    left: 0;
+    z-index: 1; /* Header stays behind confetti */
+}
+
+/* Shrink the header text */
+header h1 {
+    font-size: 20px;  /* Adjusted font size */
+}
+
+/* Navigation links */
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: underline;
+    font-size: 18px;
+}
+
+nav ul li a:hover {
+    color: #4CAF50;
+}
+
+/* Main content */
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px; /* Adjust for header height */
+}
+
+/* Section styling */
+.content {
+    margin: 20px 0;
+}
+
+/* Sentiment styling */
+#sentiment {
+    font-size: 72px;
+    font-weight: bold;
+    color: gray;
+    transition: color 0.5s ease; /* Smooth color transition */
+}
+
+/* Loading color */
+#sentiment:empty::before {
+    content: "Loading...";
+    color: #000000; /* Black for loading */
+}
+
+/* Bullish and Bearish color */
+#sentiment.active {
+    color: #FFD700; /* Bright yellow for Bullish and Bearish */
+}
+
+/* Footer styling */
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #4CAF50;
+}
+
+/* Button Styling */
+#get-started-btn {
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+#get-started-btn:hover {
+    background-color: #0056b3;  /* Darker blue on hover */
+    color: #FFFFFF;  /* Keep text white */
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 18px;
+    }
+    nav ul li {
+        margin: 0 10px;
+    }
+    #get-started-btn {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+}
