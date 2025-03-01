@@ -15,7 +15,12 @@ let sentimentData = {
     lastUpdatedTime: Date.now(), // Timestamp of the last update
 };
 
-// API to get sentiment and countdown time
+// Helper function to generate a random value for Proof of Chance
+function generateRandomValue() {
+    return Math.floor(Math.random() * 1000000); // Random value between 0 and 1,000,000
+}
+
+// API to get sentiment, timestamp, and random value
 app.get('/api/sentiment', (req, res) => {
     const currentTime = Date.now();
     const elapsedTime = Math.floor((currentTime - sentimentData.lastUpdatedTime) / 1000);
@@ -28,10 +33,12 @@ app.get('/api/sentiment', (req, res) => {
         sentimentData.lastUpdatedTime = currentTime; // Update timestamp
     }
 
+    // Send the sentiment, timestamp, time left, and random value
     res.json({
         sentiment: sentimentData.sentiment,
         lastUpdatedTime: sentimentData.lastUpdatedTime, // Send the correct timestamp
         timeLeft: timeLeft, // Send time left
+        randomValue: generateRandomValue() // Add random value to the response
     });
 });
 
