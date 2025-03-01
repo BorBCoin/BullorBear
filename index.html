@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bull or Bear Coin ($BorB)</title>
-    
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
-    
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,7 +12,7 @@
         <nav>
             <ul>
                 <li><a href="#about">About</a></li>
-                <li><a href="proof-of-chance.html">Proof of Chance</a></li> <!-- Proof of Chance link -->
+                <li><a href="proof-of-chance.html">Proof of Chance</a></li> 
                 <li><a href="#social">Social</a></li>
             </ul>
         </nav>
@@ -26,7 +24,7 @@
         <section class="content">
             <h2>Today's Sentiment:</h2>
             <p id="sentiment">Loading...</p>
-            <h2 id="countdown-display">Time remaining: 60 seconds</h2> <!-- Display countdown -->
+            <h2 id="countdown-display">Time remaining: 60 seconds</h2>
         </section>
 
         <button id="get-started-btn">Start Your Trading Journey with $BorB</button>
@@ -43,27 +41,22 @@
     </footer>
 
     <script src="script.js"></script>
-
-    <!-- Add logic to handle fetching the sentiment data -->
     <script>
         async function fetchSentiment() {
             try {
-                const response = await fetch('https://bullorbear.onrender.com/api/sentiment'); // Updated URL
+                const response = await fetch('https://bullorbear.onrender.com/api/sentiment');
                 const data = await response.json();
-                
-                const sentiment = data.sentiment;
-                const lastUpdatedTime = data.lastUpdatedTime;
 
-                // Update the sentiment on the page
+                const sentiment = data.sentiment;
+                const randomValue = data.randomValue;
+
                 const sentimentElement = document.getElementById("sentiment");
                 sentimentElement.textContent = sentiment;
-                sentimentElement.style.color = "#FFD700"; // Bright yellow for both Bullish and Bearish
+                sentimentElement.style.color = "#FFD700"; 
 
-                // Store the data in localStorage for fallback
                 localStorage.setItem("sentiment", sentiment);
-                localStorage.setItem("lastUpdatedTime", lastUpdatedTime);
+                localStorage.setItem("lastUpdatedTime", data.lastUpdatedTime);
 
-                // Change background color based on sentiment
                 document.body.style.backgroundColor = sentiment === "Bullish" ? "green" : "red";
 
                 if (sentiment === "Bullish") {
@@ -74,7 +67,6 @@
             }
         }
 
-        // Update countdown logic
         function updateCountdown(lastUpdatedTime) {
             const countdownDisplay = document.getElementById("countdown-display");
 
@@ -88,31 +80,29 @@
                 countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
 
                 if (countdown === 0) {
-                    fetchSentiment(); // Reset sentiment when countdown hits 0
-                    updateCountdown(Date.now()); // Restart countdown from current time
+                    fetchSentiment();
+                    updateCountdown(Date.now());
                 }
             }
 
             updateDisplay();
-            setInterval(updateDisplay, 1000); // Update every second
+            setInterval(updateDisplay, 1000);
         }
 
-        // Initialize page with data
         window.onload = async function () {
             const sentiment = localStorage.getItem("sentiment");
             const lastUpdatedTime = parseInt(localStorage.getItem("lastUpdatedTime"), 10);
 
-            // If no sentiment or if one minute has passed, fetch data from server
             if (!sentiment || isNaN(lastUpdatedTime)) {
-                await fetchSentiment(); // Fetch data from the server if necessary
+                await fetchSentiment();
             } else {
-                // Use stored sentiment and update the page with it
                 document.getElementById("sentiment").textContent = sentiment;
                 document.body.style.backgroundColor = sentiment === "Bullish" ? "green" : "red";
             }
 
-            updateCountdown(lastUpdatedTime); // Start countdown
+            updateCountdown(lastUpdatedTime);
         };
     </script>
 </body>
 </html>
+
