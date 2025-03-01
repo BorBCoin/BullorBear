@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors'); // Import CORS
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT; // No fallback, required for Render
 
 // Use CORS middleware
 app.use(cors()); // Allow all origins
@@ -14,6 +14,11 @@ let sentimentData = {
     sentiment: "Bullish", // Default initial sentiment
     lastUpdatedTime: Date.now(), // Timestamp of the last update
 };
+
+// Root route to prevent "Cannot GET /"
+app.get('/', (req, res) => {
+    res.send("Welcome to the BorB API! Use /api/sentiment to get sentiment data.");
+});
 
 // API to get sentiment and countdown time
 app.get('/api/sentiment', (req, res) => {
@@ -37,5 +42,5 @@ app.get('/api/sentiment', (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+    console.log(`Server running on port ${port}`);
 });
