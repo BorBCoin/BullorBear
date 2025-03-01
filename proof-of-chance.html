@@ -30,25 +30,34 @@
     </footer>
 
     <script>
-        // Retrieve the sentiment and random value from localStorage
-        window.onload = function() {
-            const sentiment = localStorage.getItem("sentiment");
-            const randomValue = localStorage.getItem("randomValue");
+        // Retrieve the sentiment and random value from backend API
+        window.onload = async function() {
+            try {
+                const response = await fetch('https://bullorbear.onrender.com/api/sentiment'); // Corrected backend URL
+                const data = await response.json();
 
-            // Display the retrieved data
-            if (sentiment && randomValue) {
-                document.getElementById("sentiment-result").textContent = `Sentiment: ${sentiment}`;
-                document.getElementById("random-value").textContent = `Random Value: ${randomValue}`;
+                const sentiment = data.sentiment;
+                const randomValue = data.randomValue; // Assuming the backend returns a random value to prove legitimacy
 
-                // Change background color based on sentiment
-                if (sentiment === "Bullish") {
-                    document.body.style.backgroundColor = "green"; // Bullish sentiment: green
+                // Display the retrieved data
+                if (sentiment && randomValue) {
+                    document.getElementById("sentiment-result").textContent = `Sentiment: ${sentiment}`;
+                    document.getElementById("random-value").textContent = `Random Value: ${randomValue}`;
+
+                    // Change background color based on sentiment
+                    if (sentiment === "Bullish") {
+                        document.body.style.backgroundColor = "green"; // Bullish sentiment: green
+                    } else {
+                        document.body.style.backgroundColor = "red"; // Bearish sentiment: red
+                    }
                 } else {
-                    document.body.style.backgroundColor = "red"; // Bearish sentiment: red
+                    document.getElementById("sentiment-result").textContent = "No sentiment data found.";
+                    document.getElementById("random-value").textContent = "No random value data found.";
                 }
-            } else {
-                document.getElementById("sentiment-result").textContent = "No sentiment data found.";
-                document.getElementById("random-value").textContent = "No random value data found.";
+            } catch (error) {
+                console.error("Error fetching sentiment data:", error);
+                document.getElementById("sentiment-result").textContent = "Failed to load sentiment data.";
+                document.getElementById("random-value").textContent = "Failed to load random value.";
             }
         };
     </script>
