@@ -1,10 +1,10 @@
 const express = require('express');
-const cors = require('cors'); // Import CORS
+const cors = require('cors');
 const app = express();
-const port = process.env.PORT || 3000; // Use environment variable PORT for Render, default to 3000 for local development
+const port = process.env.PORT || 3000; 
 
 // Use CORS middleware
-app.use(cors()); // Allow all origins
+app.use(cors());
 
 // Store sentiment and timestamp globally
 let sentimentData = {
@@ -21,37 +21,35 @@ function generateRandomValue() {
 // Helper function to determine sentiment based on random value
 function generateSentiment(randomValue) {
     if (randomValue < 500000) {
-        return "Bullish"; // Sentiment is Bullish if random value is less than 500,000
+        return "Bullish"; 
     } else {
-        return "Bearish"; // Sentiment is Bearish if random value is greater than or equal to 500,000
+        return "Bearish"; 
     }
 }
 
 // API to get sentiment, timestamp, and random value
 app.get('/api/sentiment', (req, res) => {
-    const randomValue = generateRandomValue(); // Generate random value
+    const randomValue = generateRandomValue(); 
 
     if (randomValue === null) {
-        return res.status(400).json({ error: 'Random value generation failed' }); // Error if no random value
+        return res.status(400).json({ error: 'Random value generation failed' });
     }
 
-    const sentiment = generateSentiment(randomValue); // Determine sentiment based on random value
+    const sentiment = generateSentiment(randomValue); 
 
-    // Store the sentiment and timestamp globally
     sentimentData.sentiment = sentiment;
     sentimentData.randomValue = randomValue;
-    sentimentData.lastUpdatedTime = Date.now(); // Update timestamp
+    sentimentData.lastUpdatedTime = Date.now();
 
     const currentTime = Date.now();
     const elapsedTime = Math.floor((currentTime - sentimentData.lastUpdatedTime) / 1000);
     const timeLeft = Math.max(60 - elapsedTime, 0);
 
-    // Send the sentiment, timestamp, time left, and random value in the response
     res.json({
         sentiment: sentimentData.sentiment,
-        randomValue: sentimentData.randomValue, // Include random value in the response
-        lastUpdatedTime: sentimentData.lastUpdatedTime, // Send the correct timestamp
-        timeLeft: timeLeft, // Send time left
+        randomValue: sentimentData.randomValue, 
+        lastUpdatedTime: sentimentData.lastUpdatedTime, 
+        timeLeft: timeLeft,
     });
 });
 
