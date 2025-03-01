@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors'); // Import CORS
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000; // Use environment variable PORT for Render, default to 3000 for local development
 
 // Use CORS middleware
 app.use(cors()); // Allow all origins
@@ -48,11 +48,11 @@ app.get('/api/sentiment', (req, res) => {
         sentiment: sentimentData.sentiment,
         lastUpdatedTime: sentimentData.lastUpdatedTime, // Send the correct timestamp
         timeLeft: timeLeft, // Send time left
-        randomValue: randomValue, // **Include random value** in the response
+        randomValue: randomValue, // Include random value in the response
     });
 });
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+    console.log(`Server running on https://bullorbear.onrender.com`); // Change this to show the public URL instead of localhost
 });
