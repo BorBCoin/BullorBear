@@ -37,14 +37,13 @@
                 const data = await response.json();
 
                 if (data.error) {
-                    // If there is an error, display it
                     document.getElementById("sentiment-result").textContent = data.error;
                     document.getElementById("random-value").textContent = "";
                     return;
                 }
 
                 const sentiment = data.sentiment;
-                const randomValue = data.randomValue; // Ensure the random value is fetched
+                const randomValue = data.randomValue;
 
                 // Display sentiment and random value
                 if (sentiment && randomValue !== undefined) {
