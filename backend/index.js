@@ -1,46 +1,70 @@
 const express = require('express');
-const cors = require('cors'); // Import CORS
+const cors = require('cors');
 const app = express();
-const port = process.env.PORT; // No fallback, required for Render
+const port = process.env.PORT || 3000; 
 
 // Use CORS middleware
-app.use(cors()); // Allow all origins
-
-// Array of sentiments
-const sentiments = ["Bullish", "Bearish"];
+app.use(cors());
 
 // Store sentiment and timestamp globally
 let sentimentData = {
-    sentiment: "Bullish", // Default initial sentiment
+    sentiment: null, // Initially no sentiment
     lastUpdatedTime: Date.now(), // Timestamp of the last update
+    randomValue: null // Initially no random value
 };
 
-// Root route to prevent "Cannot GET /"
-app.get('/', (req, res) => {
-    res.send("Welcome to the BorB API! Use /api/sentiment to get sentiment data.");
-});
+// Helper function to generate a random value for Proof of Chance
+function generateRandomValue() {
+    return Math.floor(Math.random() * 1000000); // Random value between 0 and 1,000,000
+}
 
-// API to get sentiment and countdown time
+// Helper function to determine sentiment based on random value
+function generateSentiment(randomValue) {
+    if (randomValue < 500000) {
+        return "Bullish"; 
+    } else {
+        return "Bearish"; 
+    }
+}
+
+// API to get sentiment, timestamp, and random value
 app.get('/api/sentiment', (req, res) => {
+    const randomValue = generateRandomValue();
+    
+    // Log the generated random value to confirm it's working
+    console.log("Generated Random Value:", randomValue);
+
+    if (randomValue === null) {
+        return res.status(400).json({ error: 'Random value generation failed' });
+    }
+
+    const sentiment = generateSentiment(randomValue); 
+
+    sentimentData.sentiment = sentiment;
+    sentimentData.randomValue = randomValue;
+    sentimentData.lastUpdatedTime = Date.now();
+
     const currentTime = Date.now();
     const elapsedTime = Math.floor((currentTime - sentimentData.lastUpdatedTime) / 1000);
     const timeLeft = Math.max(60 - elapsedTime, 0);
 
-    // If 60 seconds have passed, generate a new sentiment
-    if (timeLeft === 0) {
-        const randomIndex = Math.floor(Math.random() * sentiments.length);
-        sentimentData.sentiment = sentiments[randomIndex];
-        sentimentData.lastUpdatedTime = currentTime; // Update timestamp
-    }
+    // Log the complete data response
+    console.log({
+        sentiment: sentimentData.sentiment,
+        randomValue: sentimentData.randomValue,
+        lastUpdatedTime: sentimentData.lastUpdatedTime,
+        timeLeft: timeLeft,
+    });
 
     res.json({
         sentiment: sentimentData.sentiment,
-        lastUpdatedTime: sentimentData.lastUpdatedTime, // Send the correct timestamp
-        timeLeft: timeLeft, // Send time left
+        randomValue: sentimentData.randomValue,
+        lastUpdatedTime: sentimentData.lastUpdatedTime,
+        timeLeft: timeLeft,
     });
 });
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+    console.log(`Server running on https://bullorbear.onrender.com`);
 });
