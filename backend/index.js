@@ -8,53 +8,32 @@ app.use(cors());
 
 // Store sentiment and timestamp globally
 let sentimentData = {
-    sentiment: null, // Initially no sentiment
-    lastUpdatedTime: Date.now(), // Timestamp of the last update
-    randomValue: null // Initially no random value
+    sentiment: null,
+    lastUpdatedTime: 0,
+    randomValue: null
 };
 
-// Helper function to generate a random value for Proof of Chance
-function generateRandomValue() {
-    return Math.floor(Math.random() * 1000000); // Random value between 0 and 1,000,000
-}
+// Function to generate a new sentiment every 60 seconds
+function updateSentimentIfNeeded() {
+    const currentTime = Date.now();
+    const elapsedTime = (currentTime - sentimentData.lastUpdatedTime) / 1000;
 
-// Helper function to determine sentiment based on random value
-function generateSentiment(randomValue) {
-    if (randomValue < 500000) {
-        return "Bullish"; 
-    } else {
-        return "Bearish"; 
+    if (elapsedTime >= 60 || sentimentData.sentiment === null) {
+        sentimentData.randomValue = Math.floor(Math.random() * 1000000);
+        sentimentData.sentiment = sentimentData.randomValue < 500000 ? "Bullish" : "Bearish";
+        sentimentData.lastUpdatedTime = currentTime;
+
+        console.log("New Sentiment Generated:", sentimentData.sentiment, "Random Value:", sentimentData.randomValue);
     }
 }
 
 // API to get sentiment, timestamp, and random value
 app.get('/api/sentiment', (req, res) => {
-    const randomValue = generateRandomValue();
-    
-    // Log the generated random value to confirm it's working
-    console.log("Generated Random Value:", randomValue);
-
-    if (randomValue === null) {
-        return res.status(400).json({ error: 'Random value generation failed' });
-    }
-
-    const sentiment = generateSentiment(randomValue); 
-
-    sentimentData.sentiment = sentiment;
-    sentimentData.randomValue = randomValue;
-    sentimentData.lastUpdatedTime = Date.now();
+    updateSentimentIfNeeded();
 
     const currentTime = Date.now();
     const elapsedTime = Math.floor((currentTime - sentimentData.lastUpdatedTime) / 1000);
     const timeLeft = Math.max(60 - elapsedTime, 0);
-
-    // Log the complete data response
-    console.log({
-        sentiment: sentimentData.sentiment,
-        randomValue: sentimentData.randomValue,
-        lastUpdatedTime: sentimentData.lastUpdatedTime,
-        timeLeft: timeLeft,
-    });
 
     res.json({
         sentiment: sentimentData.sentiment,
@@ -66,5 +45,6 @@ app.get('/api/sentiment', (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server running on https://bullorbear.onrender.com`);
+    console.log(`Server running on port ${port}`);
 });
+
