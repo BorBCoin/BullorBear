@@ -127,23 +127,36 @@ footer a:hover {
     color: #4CAF50;
 }
 
-/* Button Styling */
-#get-started-btn {
-    background-color: #007BFF;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
+/* Social Page Specific Styles */
+.social-list {
+    list-style-type: none;
+    padding: 0;
+    font-size: 1.5rem;
 }
 
-#get-started-btn:hover {
-    background-color: #0056b3;  /* Darker blue on hover */
-    color: #FFFFFF;  /* Keep text white */
+.social-list li {
+    background-color: #e4e7eb;
+    color: #333;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.social-list li:hover {
+    background-color: #39a0ed;
+    color: white;
+    cursor: pointer;
+}
+
+.social-list li a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.social-list li a:hover {
+    color: white;
 }
 
 /* Responsive Design */
