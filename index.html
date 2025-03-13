@@ -1,107 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bull or Bear Coin ($BorB)</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bull or Bear Coin ($BorB)</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li> <!-- Home page -->
-                <li><a href="proof-of-chance.html">Proof of Chance</a></li> 
-                <li><a href="socials.html" class="active">Social</a></li> <!-- Updated link to socials.html -->
-            </ul>
-        </nav>
-        <h1>Welcome to Bull or Bear Coin ($BorB)</h1>
-        <p>Your new daily trading opportunity with a unique dynamic</p>
-    </header>
+  <header>
+    <nav>
+      <ul>
+        <!-- Mark Home as active on the index page -->
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="proof-of-chance.html">Proof of Chance</a></li>
+        <li><a href="socials.html">Social</a></li>
+      </ul>
+    </nav>
+    <h1>Welcome to Bull or Bear Coin ($BorB)</h1>
+    <p>Your new daily trading opportunity with a unique dynamic</p>
+  </header>
 
-    <main>
-        <section class="content">
-            <h2>Today's Sentiment:</h2>
-            <p id="sentiment">Loading...</p>
-            <h2 id="countdown-display">Time remaining: 60 seconds</h2>
-        </section>
+  <main>
+    <section class="content">
+      <h2>Today's Sentiment:</h2>
+      <p id="sentiment">Loading...</p>
+      <h2 id="countdown-display">Time remaining: 60 seconds</h2>
+    </section>
 
-        <button id="get-started-btn">Start Your Trading Journey with $BorB</button>
-    </main>
+    <button id="get-started-btn">Start Your Trading Journey with $BorB</button>
+  </main>
 
-    <footer>
-        <p>&copy; 2025 Bull or Bear Coin. All rights reserved.</p>
-        <nav>
-            <a href="proof-of-chance.html">Proof of Chance</a> | 
-            <a href="socials.html">Social</a> | 
-            <a href="privacy.html">Privacy Policy</a> | 
-            <a href="terms.html">Terms of Service</a>
-        </nav>
-    </footer>
+  <footer>
+    <p>&copy; 2025 Bull or Bear Coin. All rights reserved.</p>
+    <nav>
+      <a href="proof-of-chance.html">Proof of Chance</a> | 
+      <a href="socials.html">Social</a> | 
+      <a href="privacy.html">Privacy Policy</a> | 
+      <a href="terms.html">Terms of Service</a>
+    </nav>
+  </footer>
 
-    <script src="script.js"></script>
-    <script>
-        async function fetchSentiment() {
-            try {
-                const response = await fetch('https://bullorbear.onrender.com/api/sentiment');
-                const data = await response.json();
+  <!-- Frontend script to fetch sentiment and update UI -->
+  <script>
+    async function fetchSentiment() {
+      try {
+        const response = await fetch('https://bullorbear.onrender.com/api/sentiment');
+        const data = await response.json();
 
-                const sentiment = data.sentiment;
-                const randomValue = data.randomValue;
+        const sentiment = data.sentiment;
+        const sentimentElement = document.getElementById("sentiment");
+        sentimentElement.textContent = sentiment;
+        // Set text color conditionally: green for Bullish, red for Bearish
+        sentimentElement.style.color = sentiment === "Bullish" ? "green" : "red";
 
-                const sentimentElement = document.getElementById("sentiment");
-                sentimentElement.textContent = sentiment;
-                sentimentElement.style.color = "#FFD700"; 
+        localStorage.setItem("sentiment", sentiment);
+        localStorage.setItem("lastUpdatedTime", data.lastUpdatedTime);
 
-                localStorage.setItem("sentiment", sentiment);
-                localStorage.setItem("lastUpdatedTime", data.lastUpdatedTime);
+        document.body.style.backgroundColor = sentiment === "Bullish" ? "green" : "red";
 
-                document.body.style.backgroundColor = sentiment === "Bullish" ? "green" : "red";
-
-                if (sentiment === "Bullish") {
-                    startConfetti();
-                }
-            } catch (error) {
-                console.error("Error fetching sentiment:", error);
-            }
+        if (sentiment === "Bullish") {
+          startConfetti();
         }
+      } catch (error) {
+        console.error("Error fetching sentiment:", error);
+      }
+    }
 
-        function updateCountdown(lastUpdatedTime) {
-            const countdownDisplay = document.getElementById("countdown-display");
+    function updateCountdown(lastUpdatedTime) {
+      const countdownDisplay = document.getElementById("countdown-display");
 
-            function calculateRemainingTime() {
-                const elapsedTime = Math.floor((Date.now() - lastUpdatedTime) / 1000);
-                return Math.max(60 - elapsedTime, 0);
-            }
+      function calculateRemainingTime() {
+        const elapsedTime = Math.floor((Date.now() - lastUpdatedTime) / 1000);
+        return Math.max(60 - elapsedTime, 0);
+      }
 
-            function updateDisplay() {
-                let countdown = calculateRemainingTime();
-                countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
+      function updateDisplay() {
+        let countdown = calculateRemainingTime();
+        countdownDisplay.textContent = `Time remaining: ${countdown} seconds`;
 
-                if (countdown === 0) {
-                    fetchSentiment();
-                    updateCountdown(Date.now());
-                }
-            }
-
-            updateDisplay();
-            setInterval(updateDisplay, 1000);
+        if (countdown === 0) {
+          fetchSentiment();
+          updateCountdown(Date.now());
         }
+      }
 
-        window.onload = async function () {
-            const sentiment = localStorage.getItem("sentiment");
-            const lastUpdatedTime = parseInt(localStorage.getItem("lastUpdatedTime"), 10);
+      updateDisplay();
+      setInterval(updateDisplay, 1000);
+    }
 
-            if (!sentiment || isNaN(lastUpdatedTime)) {
-                await fetchSentiment();
-            } else {
-                document.getElementById("sentiment").textContent = sentiment;
-                document.body.style.backgroundColor = sentiment === "Bullish" ? "green" : "red";
-            }
+    window.onload = async function () {
+      const sentimentElement = document.getElementById("sentiment");
+      const storedSentiment = localStorage.getItem("sentiment");
+      const lastUpdatedTime = parseInt(localStorage.getItem("lastUpdatedTime"), 10);
 
-            updateCountdown(lastUpdatedTime);
-        };
-    </script>
+      if (!storedSentiment || isNaN(lastUpdatedTime)) {
+        await fetchSentiment();
+      } else {
+        sentimentElement.textContent = storedSentiment;
+        sentimentElement.style.color = storedSentiment === "Bullish" ? "green" : "red";
+        document.body.style.backgroundColor = storedSentiment === "Bullish" ? "green" : "red";
+      }
+
+      updateCountdown(lastUpdatedTime || Date.now());
+    };
+
+    // Define confetti function if not already defined
+    function startConfetti() {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+  </script>
 </body>
 </html>
