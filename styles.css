@@ -129,18 +129,18 @@ footer a:hover {
     transition: color 0.5s ease;
 }
 
+/* Default loading message */
 #sentiment:empty::before {
     content: "Loading...";
     color: white;
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 600px) {
-    header h1 {
-        font-size: 18px;
-    }
-    nav ul li {
-        margin: 0 10px;
-    }
+/* Bullish sentiment - Green */
+.bullish {
+    color: green;
 }
 
+/* Bearish sentiment - Red */
+.bearish {
+    color: red;
+}
