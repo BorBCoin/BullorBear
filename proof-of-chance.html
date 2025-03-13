@@ -1,71 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proof of Chance</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proof of Chance</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <header>
-        <h1>Proof of Chance</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Back to Home</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <h1>Proof of Chance</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Back to Home</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <main>
-        <section>
-            <h2>How Today's Sentiment Was Determined</h2>
-            <p>Today's sentiment was generated randomly using a secure method.</p>
-            <p id="sentiment-result">Loading...</p> <!-- Display sentiment result -->
-            <p id="random-value">Loading...</p> <!-- Display random value -->
-        </section>
-    </main>
+  <main>
+    <section>
+      <h2>How Today's Sentiment Was Determined</h2>
+      <p>Today's sentiment was generated randomly using a secure method.</p>
+      <!-- Initial fallback messages -->
+      <p id="sentiment-result">Loading...</p>
+      <p id="random-value">Loading...</p>
+    </section>
+  </main>
 
-    <footer>
-        <p>&copy; 2025 Bull or Bear Coin. All rights reserved.</p>
-    </footer>
+  <footer>
+    <p>&copy; 2025 Bull or Bear Coin. All rights reserved.</p>
+  </footer>
 
-    <script>
-        // Fetch sentiment and random value from backend API
-        window.onload = async function() {
-            try {
-                const response = await fetch('https://bullorbear.onrender.com/api/sentiment');
-                const data = await response.json();
+  <script>
+    window.onload = async function() {
+      try {
+        const response = await fetch('https://bullorbear.onrender.com/api/sentiment');
+        const data = await response.json();
 
-                if (data.error) {
-                    document.getElementById("sentiment-result").textContent = data.error;
-                    document.getElementById("random-value").textContent = "";
-                    return;
-                }
+        // Check if data is received properly
+        if (!data || (!data.sentiment && data.sentiment !== "")) {
+          document.getElementById("sentiment-result").textContent = "Loading...";
+          document.getElementById("random-value").textContent = "Loading...";
+          return;
+        }
 
-                const sentiment = data.sentiment;
-                const randomValue = data.randomValue;
+        const sentiment = data.sentiment;
+        const randomValue = data.randomValue;
 
-                // Display sentiment and random value
-                if (sentiment && randomValue !== undefined) {
-                    document.getElementById("sentiment-result").textContent = `Sentiment: ${sentiment}`;
-                    document.getElementById("random-value").textContent = `Random Value: ${randomValue}`;
-
-                    // Change background color based on sentiment
-                    if (sentiment === "Bullish") {
-                        document.body.style.backgroundColor = "green";
-                    } else {
-                        document.body.style.backgroundColor = "red";
-                    }
-                } else {
-                    document.getElementById("sentiment-result").textContent = "No sentiment data found.";
-                    document.getElementById("random-value").textContent = "No random value data found.";
-                }
-            } catch (error) {
-                console.error("Error fetching sentiment data:", error);
-                document.getElementById("sentiment-result").textContent = "Failed to load sentiment data.";
-                document.getElementById("random-value").textContent = "Failed to load random value.";
-            }
-        };
-    </script>
+        // If both sentiment and randomValue are available, update the UI
+        if (sentiment && randomValue !== undefined) {
+          document.getElementById("sentiment-result").textContent = `Sentiment: ${sentiment}`;
+          document.getElementById("random-value").textContent = `Random Value: ${randomValue}`;
+          // Set text color based on sentiment
+          document.getElementById("sentiment-result").style.color = sentiment === "Bullish" ? "green" : "red";
+          // Change background color accordingly
+          document.body.style.backgroundColor = sentiment === "Bullish" ? "green" : "red";
+        } else {
+          // If values are missing, show an error message
+          document.getElementById("sentiment-result").textContent = "Can't generate value.";
+          document.getElementById("random-value").textContent = "";
+        }
+      } catch (error) {
+        console.error("Error fetching sentiment data:", error);
+        document.getElementById("sentiment-result").textContent = "Failed to load sentiment data.";
+        document.getElementById("random-value").textContent = "Failed to load random value.";
+      }
+    };
+  </script>
 </body>
 </html>
+
